@@ -878,6 +878,7 @@
   </div>
 
   <script>
+
     // ---------- Helpers ----------
     const eur = (n) => {
       const v = Number(n || 0);
@@ -889,24 +890,32 @@
       const n = Number(s);
       return Number.isFinite(n) ? n : 0;
     };
-    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
+    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16); 
 
     function show(el, on){ el.style.display = on ? "" : "none"; }
+ 
 
     // ---------- Catalogs (podes alterar preços depois) ----------
     const CATALOG = {
       software: [
         { label: "2smart HR Cloud — Licença (1º Ano)", price: 6.60, type: "mensal_colab", hint: "€ / colaborador (mês)" },
         { label: "2smart HR Cloud — Subscrição Anual", price: 4.50, type: "anual_colab", hint: "€ / colaborador / ano" },
+       /*
         { label: "2smart ISP — Preço de Ativação", price: 60.00, type: "oneoff_terminal", hint: "€ / terminal" },
-        { label: "2smart ISP — Subscrição Anual", price: 15.00, type: "anual_terminal", hint: "€ / terminal / ano" },
-        { label: "CMS Sinalética (Licença + Gestão) — 1º Ano", price: 240.00, type: "oneoff", hint: "€ (1º ano)" },      ],
+        { label: "2smart ISP — Subscrição Anual", price: 15.00, type: "anual_terminal", hint: "€ / terminal / ano" }, 
+        { label: "CMS Sinalética (Licença + Gestão) — 1º Ano", price: 240.00, type: "oneoff", hint: "€ (1º ano)" },     
+        */],
       modules: [
         { label: "Geolocalização & Geofencing", price: 1.00, model: "mensal_colab", hint: "€ / mês por colaborador", desc: "Veja a movimentação, presença e cobertura das equipas." },
         { label: "Integração com ERP", price: 0.65, model: "mensal_colab", hint: "€ / mês por colaborador", desc: "Este módulo melhora a produtividade e reforça o controlo sobre os processos internos da sua empresa." },
         { label: "Automatização de Processos e Envio de Relatórios", price: 8.00, model: "mensal", hint: "€ / mês", desc: "Permite agendar e enviar automaticamente qualquer relatório do 2Smart HR para destinatários pré-definidos." },
       ],
       terminals: [
+        { label: "2S-M6PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 4.3″ Luz Visível Wifi", price: 318.00, cat: "Acessos + Assiduidade" },
+        { label: "2S-M5PRO -  Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 261.00, cat: "Acessos + Assiduidade" },
+        { label: "2S-M2PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 195.00, cat: "Acessos + Assiduidade" },
+
+
         { label: "TA500 — Terminal Controlo Assiduidade (Impressão Digital)", price: 269.00, cat: "Assiduidade" },
         { label: "R3 — Terminal Acessos e Assiduidades (Impressão Digital)", price: 428.00, cat: "Acessos + Assiduidade" },
         { label: "HX-2200 — Terminal Acessos e Assiduidades TCP/IP (RFID WiFi)", price: 265.00, cat: "Acessos + Assiduidade" },
@@ -930,13 +939,13 @@
         { label: "Deslocação (até 30 km)", price: 85.00, type:"oneoff", hint:"€" },
       ],
       tech: [
-        { label: "Implementação remota — até 50 colaboradores", hours: 4, price: 145.00 },
-        { label: "Implementação remota — até 120 colaboradores", hours: 5, price: 160.00 },
-        { label: "Implementação remota — até 200 colaboradores", hours: 8, price: 280.00 },
-        { label: "Implementação remota — até 300 colaboradores", hours: 16, price: 560.00 },
-        { label: "Implementação remota — mais de 300 colaboradores", hours: 0, price: 0.00 },
+        { label: "Implementação e formação remota — até 50 colaboradores", hours: 4, price: 145.00 },
+        { label: "Implementação e formação  remota — até 120 colaboradores", hours: 5, price: 160.00 },
+        { label: "Implementação e formação remota — até 200 colaboradores", hours: 8, price: 280.00 },
+        { label: "Implementação e formação  remota — até 300 colaboradores", hours: 16, price: 560.00 },
+        { label: "Implementação e formação  remota — mais de 300 colaboradores", hours: 0, price: 0.00 },
         { label: "Formação remota — 4 horas", hours: 4, price: 120.00 },
-        { label: "Formação remota — 8 horas (2 sessões)", hours: 8, price: 240.00 },
+        { label: "Formação remota — 8 horas", hours: 8, price: 240.00 },
         { label: "Formação — 2smart App", hours: 0, price: 100.00 },
       ],
       support: [
@@ -959,6 +968,11 @@
 
     // ---------- DOM ----------
     const $ = (id) => document.getElementById(id);
+    setTimeout(() => {
+      let p = document?.querySelector("#refCode") 
+      p.value = "PRS2-" +  (Math.random(4,8)*Math.random(8,2)*3).toString().split(".")[1]; 
+      console.log(p.value)
+    }, 2000);
 
     
 
@@ -1277,12 +1291,31 @@
       state.accessories.forEach(r => {
         const tr = document.createElement("tr");
 
+        // Item: campo livre com sugestões (datalist)
         const tdItem = document.createElement("td");
-        const sel = buildSelect(CATALOG.accessories, r.label);
-        tdItem.appendChild(sel);
+
+        const dlId = "dl_acc_" + r.id;
+        const datalist = document.createElement("datalist");
+        datalist.id = dlId;
+        CATALOG.accessories.forEach(o=>{
+          const opt = document.createElement("option");
+          opt.value = o.label;
+          datalist.appendChild(opt);
+        });
+
+        const itemInp = document.createElement("input");
+        itemInp.className = "form-control form-control-sm";
+        itemInp.placeholder = "Ex: Instalação, Configuração, Cabo, etc.";
+        itemInp.value = r.label ?? "";
+        itemInp.setAttribute("list", dlId);
+
+        tdItem.appendChild(itemInp);
+        tdItem.appendChild(datalist);
+
         const hint = document.createElement("div");
         hint.className="muted";
-        hint.textContent = (CATALOG.accessories.find(x=>x.label===r.label)?.hint) || "";
+        const found0 = CATALOG.accessories.find(x=>x.label===r.label);
+        hint.textContent = found0?.hint || "";
         tdItem.appendChild(hint);
 
         const tdQty = document.createElement("td");
@@ -1315,13 +1348,21 @@
         del.innerHTML='<i class="bi bi-trash"></i>';
         tdDel.appendChild(del);
 
-        sel.addEventListener("change", ()=>{
-          r.label = sel.value;
+        // events
+        itemInp.addEventListener("input", ()=>{
+          r.label = itemInp.value;
           const found = CATALOG.accessories.find(x=>x.label===r.label);
-          r.unit = found ? found.price : r.unit;
-          r.kind = found?.type === "anual" ? "anual" : (found?.type || r.kind);
-          render();
+          hint.textContent = found?.hint || "";
+          if(found){
+            // Se o item existir no catálogo, sugerir preço e tipo
+            r.unit = found.price;
+            r.kind = (found.type === "anual") ? "anual" : "oneoff";
+            unit.value = r.unit;
+            typeSel.value = r.kind;
+          }
+          recalcTotals();
         });
+
         qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
         typeSel.addEventListener("change", ()=>{ r.kind=typeSel.value; recalcTotals(); });
@@ -1942,7 +1983,7 @@
       if(btnL){
         btnL.addEventListener("click", ()=>{
           bootstrap.Modal.getInstance(modalEl)?.hide();
-          exportPdfWithMode("light");
+    // (removido) não exportar automaticamente no refresh
         });
       }
     }
@@ -1953,7 +1994,7 @@
     } else {
       bindPdfDownloadModal();
     }
-exportPdfWithMode("light");
+//exportPdfWithMode("light");
  
 function sanitizeFile(s){
       return String(s || "Proposta")
