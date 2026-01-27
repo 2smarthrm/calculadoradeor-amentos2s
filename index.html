@@ -300,7 +300,7 @@
     .pdf-flow{
       width: 794px;
       background:#fff;
-      page-break-after: always;
+      page-break-after: auto;
     }
 
     @page { margin: 0; }
@@ -456,13 +456,14 @@
     /* Host para captura: coordenadas POSITIVAS (evita "página na negativa") */
     #pdfRenderHost{
       position: fixed;
-      left: 0;
+      left: -10000px;
       top: 0;
       width: 794px;
-      height: 1123px;
-      opacity: 0.01;
+      height: auto;
+      opacity: 1;
       z-index: -1;
       pointer-events: none;
+      overflow: visible;
     }
 
     #pdfRoot{
@@ -479,13 +480,15 @@
     .pdf-footer{
       width: 794px;
       height: 1123px;
+      font-size: 0;
+      line-height: 0;
       margin: 0 !important;
       padding: 0 !important;
       overflow: hidden;
       background:#fff;
       position: relative;
     }
-    .pdf-cover{ page-break-after: always; }
+    .pdf-cover{ height: 1122px; page-break-after: always; }
     .pdf-footer{ page-break-before: always; page-break-after: auto; }
 
     .pdf-cover img,
@@ -970,7 +973,7 @@
     const $ = (id) => document.getElementById(id);
     setTimeout(() => {
       let p = document?.querySelector("#refCode") 
-      p.value = "PRS2-" +  (Math.random(4,8)*Math.random(8,2)*3).toString().split(".")[1]; 
+      p.value = "PR2S-" +  (Math.random(4,8)*Math.random(8,2)*3).toString().split(".")[1]; 
       console.log(p.value)
     }, 2000);
 
@@ -1291,31 +1294,12 @@
       state.accessories.forEach(r => {
         const tr = document.createElement("tr");
 
-        // Item: campo livre com sugestões (datalist)
         const tdItem = document.createElement("td");
-
-        const dlId = "dl_acc_" + r.id;
-        const datalist = document.createElement("datalist");
-        datalist.id = dlId;
-        CATALOG.accessories.forEach(o=>{
-          const opt = document.createElement("option");
-          opt.value = o.label;
-          datalist.appendChild(opt);
-        });
-
-        const itemInp = document.createElement("input");
-        itemInp.className = "form-control form-control-sm";
-        itemInp.placeholder = "Ex: Instalação, Configuração, Cabo, etc.";
-        itemInp.value = r.label ?? "";
-        itemInp.setAttribute("list", dlId);
-
-        tdItem.appendChild(itemInp);
-        tdItem.appendChild(datalist);
-
+        const sel = buildSelect(CATALOG.accessories, r.label);
+        tdItem.appendChild(sel);
         const hint = document.createElement("div");
         hint.className="muted";
-        const found0 = CATALOG.accessories.find(x=>x.label===r.label);
-        hint.textContent = found0?.hint || "";
+        hint.textContent = (CATALOG.accessories.find(x=>x.label===r.label)?.hint) || "";
         tdItem.appendChild(hint);
 
         const tdQty = document.createElement("td");
@@ -1348,21 +1332,13 @@
         del.innerHTML='<i class="bi bi-trash"></i>';
         tdDel.appendChild(del);
 
-        // events
-        itemInp.addEventListener("input", ()=>{
-          r.label = itemInp.value;
+        sel.addEventListener("change", ()=>{
+          r.label = sel.value;
           const found = CATALOG.accessories.find(x=>x.label===r.label);
-          hint.textContent = found?.hint || "";
-          if(found){
-            // Se o item existir no catálogo, sugerir preço e tipo
-            r.unit = found.price;
-            r.kind = (found.type === "anual") ? "anual" : "oneoff";
-            unit.value = r.unit;
-            typeSel.value = r.kind;
-          }
-          recalcTotals();
+          r.unit = found ? found.price : r.unit;
+          r.kind = found?.type === "anual" ? "anual" : (found?.type || r.kind);
+          render();
         });
-
         qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
         typeSel.addEventListener("change", ()=>{ r.kind=typeSel.value; recalcTotals(); });
@@ -1739,13 +1715,12 @@
       // Build pages:
       // Page 1: cover
       // Page 2+: proposal content; keep footer image at bottom.
-      const content = `
-        <div class="pdf-cover">
+      const content = `        <div class="pdf-cover">
           <img src="${escapeAttr(coverUrl)}" alt="Capa">
         </div>
 
         <div class="pdf-flow">
-<div class="pdf-header">
+          <div class="pdf-header">
             <div class="meta">
               <h2>Proposta Comercial</h2>
               <p style="margin-top:4px">Documento gerado em <b>${escapeHtml(genDate)}</b></p>
@@ -1772,22 +1747,22 @@
             ${showTech ? sectionToPDF("Assessoria Técnica", techRows, { columns: ["Pacote","Horas","Qtd.","Valor unitário","Total"] }) : ""}
             ${showSupport ? sectionToPDF("Suporte Técnico", supportRows, { columns: ["Pack","Inclui","Qtd.","Valor unitário","Total"] }) : ""}
 
-        ${notes ? `
-  <div class="pdf-section-title">Observações</div>
-  <div style="
-    border:1px solid #e8eef7;
-    border-radius:12px;
-    padding:12px;
-    font-size:11px;
-    line-height:1.6;
-    color:#30425e;
-    font-weight:500;
-    background:#fbfdff;
-  ">
-    ${escapeHtml(notes).replace(/\n/g, "<br>")}
-  </div>
-` : ""}
-
+            ${notes ? `
+              <div class="pdf-section-title">Observações</div>
+              <div style="
+                border:1px solid #e8eef7;
+                border-radius:12px;
+                padding:12px;
+                font-size:11px;
+                line-height:1.6;
+                color:#30425e;
+                font-weight:500;
+                background:#fbfdff;
+              ">
+                ${escapeHtml(notes).replace(/\n/g, "<br>")}
+              </div>
+            ` : ""}
+          </div>
 
           <div class="pdf-totals">
             <div class="pdf-chip">Total proposta: <span>${escapeHtml(grand)}</span></div>
@@ -1801,8 +1776,7 @@
 
         <div class="pdf-footer">
           <img src="${escapeAttr(footerUrl)}" alt="Rodapé">
-        </div>
-      `;
+        </div>`;
 
       return content;
     }
@@ -1890,6 +1864,14 @@
         }
 
         // Agora o root tem: capa + conteúdo (sem footer)
+        // Garantir que o host não corta o conteúdo (evita páginas em branco)
+        host.style.height = 'auto';
+        host.style.overflow = 'visible';
+        root.style.height = 'auto';
+        root.style.overflow = 'visible';
+
+        const dynamicWinH = Math.max(1123, Math.ceil(root.scrollHeight || 0));
+
         const opt = {
           margin: [0,0,0,0],
           filename,
@@ -1900,7 +1882,7 @@
             allowTaint: false,
             backgroundColor: "#ffffff",
             windowWidth: 794,
-            windowHeight: 1123,
+            windowHeight: dynamicWinH,
             scrollX: 0,
             scrollY: 0,
             x: 0,
@@ -1908,17 +1890,11 @@
           },
           jsPDF: { unit: "px", format: [794,1123], orientation: "portrait" },
           // Evita empurrões grandes (mas mantém respeito por page-break CSS)
-          pagebreak: { mode: ["css", "legacy"] }
+          pagebreak: { mode: ["css"] }
         };
 
         const worker = html2pdf().set(opt).from(root).toPdf();
         const pdf = await worker.get("pdf");
-
-        // Remover páginas vazias extra no fim (quando o motor cria folhas sem conteúdo)
-        const expectedPages = Math.max(1, Math.ceil(root.scrollHeight / 1123));
-        while(pdf.getNumberOfPages() > expectedPages){
-          pdf.deletePage(pdf.getNumberOfPages());
-        }
 
         // Repor footer no DOM
         if(footerEl && footerParent){
@@ -1983,7 +1959,7 @@
       if(btnL){
         btnL.addEventListener("click", ()=>{
           bootstrap.Modal.getInstance(modalEl)?.hide();
-    // (removido) não exportar automaticamente no refresh
+          exportPdfWithMode("light");
         });
       }
     }
@@ -1994,7 +1970,7 @@
     } else {
       bindPdfDownloadModal();
     }
-//exportPdfWithMode("light");
+// exportPdfWithMode("light");
  
 function sanitizeFile(s){
       return String(s || "Proposta")
