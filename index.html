@@ -292,7 +292,7 @@
       inset:0;
       width:100%;
       height:100%;
-      object-fit: cover;
+      object-fit: ;
       display:block;
     }
 
@@ -476,7 +476,7 @@
     }
 
     /* Capa / Footer: 1 página inteira */
-    .pdf-cover,
+    .pdf-,
     .pdf-footer{
       width: 794px;
       height: 1123px;
@@ -488,15 +488,15 @@
       background:#fff;
       position: relative;
     }
-    .pdf-cover{ height: 1122px; page-break-after: always; }
+    .pdf-{ height: 1122px; page-break-after: always; }
     .pdf-footer{ page-break-before: always; page-break-after: auto; }
 
-    .pdf-cover img,
+    .pdf- img,
     .pdf-footer img{
       width: 100%;
       height: 100%;
       display:block;
-      object-fit: cover; /* ocupa a folha inteira */
+      object-fit: ; /* ocupa a folha inteira */
     }
 
     /* Conteúdo: começa no topo e evita cortes estranhos */
@@ -825,11 +825,11 @@
             <div class="row g-2">
               <div class="col-12">
                 <label class="form-label">URL da capa</label>
-                <input id="coverUrl" class="form-control" value="https://ik.imagekit.io/fsobpyaa5i/capa_smart.png?updatedAt=1769508815425">
+                <input id="Url" class="form-control" value="https://ik.imagekit.io/fsobpyaa5i/capa_smart.png?updatedAt=1769508815425">
               </div>
               <div class="col-12">
                 <label class="form-label">URL do footer</label>
-                <input id="footerUrl" class="form-control" value="https://ik.imagekit.io/fsobpyaa5i/Group%2030469%20(1).png">
+                <input id="footerUrl" class="form-control" value="https://ik.imagekit.io/fsobpyaa5i/Group%2030469%20(3).png">
               </div>
               <div class="col-12">
                 <label class="form-label">Logótipo 2smart</label>
@@ -1613,7 +1613,7 @@
     }
 
     function buildPDFHtml(){
-      const coverUrl = $("coverUrl").value.trim();
+      const Url = $("Url").value.trim();
       const footerUrl = $("footerUrl").value.trim();
       const logoUrl = $("logoUrl").value.trim();
 
@@ -1713,10 +1713,10 @@
       const showSupport = $("toggleSupport").checked && supportRows.length;
 
       // Build pages:
-      // Page 1: cover
+      // Page 1: 
       // Page 2+: proposal content; keep footer image at bottom.
-      const content = `        <div class="pdf-cover">
-          <img src="${escapeAttr(coverUrl)}" alt="Capa">
+      const content = `        <div class="pdf-">
+          <img src="${escapeAttr(Url)}" alt="Capa">
         </div>
 
         <div class="pdf-flow">
