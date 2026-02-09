@@ -696,7 +696,7 @@
       </div>
     </div>
   </div>
-
+ 
 <script>
   const eur = (n) => {
     const v = Number(n || 0);
@@ -749,7 +749,13 @@
     ]
   };
 
-  const defaultRentingRow = () => ({ id: uid(), label: "Renting  (Instalação, Implementação, e formação remota)", unit: 400.00, collabs: 0, kind: "anual" });
+  const defaultRentingRow = () => ({
+    id: uid(),
+    label: "Renting  (Instalação, Implementação, e formação remota)",
+    unit: 400.00,
+    collabs: 0,
+    kind: "anual"
+  });
 
   const state = {
     software: [],
@@ -958,6 +964,7 @@
       qty.addEventListener("input", ()=>{ r.qty = num(qty.value); recalcTotals(); });
       unit.addEventListener("input", ()=>{ r.unit = num(unit.value); recalcTotals(); });
       typeSel.addEventListener("change", ()=>{ r.kind = typeSel.value; recalcTotals(); });
+
       del.addEventListener("click", ()=> removeRow("software", r.id));
 
       tr.append(tdItem, tdQty, tdUnit, tdType, tdDel);
@@ -1366,6 +1373,10 @@
     });
   }
 
+  function annualToYearIfNeeded(kind, line){
+    return (kind === "anual") ? (line * 12) : line;
+  }
+
   function recalcTotals(){
     let annual = 0;
     let monthly = 0;
@@ -1373,7 +1384,8 @@
 
     if ($("toggleSoftware").checked){
       state.software.forEach(r=>{
-        const line = num(r.qty) * num(r.unit);
+        let line = num(r.qty) * num(r.unit);
+        if (r.kind === "anual") line *= 12;
         if (r.kind === "anual") annual += line;
         else if (r.kind === "mensal") monthly += line;
         else oneoff += line;
@@ -1382,7 +1394,8 @@
 
     if ($("toggleModules").checked){
       state.modules.forEach(r=>{
-        const line = num(r.qty) * num(r.unit);
+        let line = num(r.qty) * num(r.unit);
+        if (r.model === "anual") line *= 12;
         if (r.model === "anual") annual += line;
         else oneoff += line;
       });
@@ -1394,7 +1407,8 @@
 
     if ($("toggleAccessories").checked){
       state.accessories.forEach(r=>{
-        const line = num(r.qty) * num(r.unit);
+        let line = num(r.qty) * num(r.unit);
+        if (r.kind === "anual") line *= 12;
         if (r.kind === "anual") annual += line;
         else oneoff += line;
       });
@@ -1410,7 +1424,8 @@
 
     if ($("toggleRenting").checked){
       state.renting.forEach(r=>{
-        const line = rentingLineTotal(r);
+        let line = rentingLineTotal(r);
+        if(r.kind === "anual") line *= 12;
         if(r.kind === "mensal") monthly += line;
         else if(r.kind === "anual") annual += line;
         else oneoff += line;
@@ -1493,8 +1508,9 @@
     const grand = $("grandTotal").textContent;
 
     const softwareRows = $("toggleSoftware").checked ? state.software.map(r=>{
-      const line = num(r.qty) * num(r.unit);
+      let line = num(r.qty) * num(r.unit);
       const kind = r.kind === "anual" ? "Anual" : (r.kind === "mensal" ? "Mensal" : "One-off");
+      if (r.kind === "anual") line *= 12;
       return [
         `<b>${escapeHtml(r.label)}</b>`,
         `${escapeHtml(String(r.qty || 0))}`,
@@ -1505,8 +1521,9 @@
     }) : [];
 
     const moduleRows = $("toggleModules").checked ? state.modules.map(r=>{
-      const line = num(r.qty) * num(r.unit);
+      let line = num(r.qty) * num(r.unit);
       const model = r.model === "anual" ? "Anual" : "One-off";
+      if (r.model === "anual") line *= 12;
       return [
         `<b>${escapeHtml(r.label)}</b>`,
         `${escapeHtml(String(r.qty || 0))}`,
@@ -1527,8 +1544,9 @@
     }) : [];
 
     const accessoryRows = $("toggleAccessories").checked ? state.accessories.map(r=>{
-      const line = num(r.qty) * num(r.unit);
+      let line = num(r.qty) * num(r.unit);
       const kind = r.kind === "anual" ? "Anual" : "One-off";
+      if (r.kind === "anual") line *= 12;
       return [
         `<b>${escapeHtml(r.label)}</b>`,
         `${escapeHtml(String(r.qty || 0))}`,
@@ -1542,9 +1560,10 @@
       if (!$("toggleRenting").checked) return [];
       const rows = state.renting
         .map(r => {
-          const total = rentingLineTotal(r);
+          let total = rentingLineTotal(r);
           if(total <= 0) return null;
           const tipo = r.kind === "mensal" ? "Mensal" : (r.kind === "anual" ? "Anual" : "One-off");
+          if(r.kind === "anual") total *= 12;
           return [
             `<b>${escapeHtml(r.label)}</b>`,
             `${tipo}`,
@@ -1835,6 +1854,7 @@
   recalcTotals();
 </script>
 
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <div class="modal fade" id="downloadPdfModal" tabindex="-1" aria-hidden="true">
@@ -1858,5 +1878,3 @@
 
 </body>
 </html>
-
-
