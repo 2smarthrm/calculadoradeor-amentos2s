@@ -697,1110 +697,1143 @@
     </div>
   </div>
 
-  <script>
-    const eur = (n) => {
-      const v = Number(n || 0);
-      return v.toLocaleString("pt-PT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
-    };
+<script>
+  const eur = (n) => {
+    const v = Number(n || 0);
+    return v.toLocaleString("pt-PT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
+  };
 
-    const num = (v) => {
-      if (v === null || v === undefined) return 0;
-      const s = String(v).replace(",", ".").replace(/[^\d.\-]/g, "");
-      const n = Number(s);
-      return Number.isFinite(n) ? n : 0;
-    };
+  const num = (v) => {
+    if (v === null || v === undefined) return 0;
+    const s = String(v).replace(",", ".").replace(/[^\d.\-]/g, "");
+    const n = Number(s);
+    return Number.isFinite(n) ? n : 0;
+  };
 
-    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
-    const $ = (id) => document.getElementById(id);
-    function show(el, on){ el.style.display = on ? "" : "none"; }
+  const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
+  const $ = (id) => document.getElementById(id);
+  function show(el, on){ el.style.display = on ? "" : "none"; }
 
-    const CATALOG = {
-      software: [
-        { label: "2smart HR Cloud — Licença (1º Ano)", price: 6.60, type: "mensal_colab", hint: "€ / colaborador (mês)" },
-        { label: "2smart HR Cloud — Subscrição Anual", price: 4.50, type: "anual_colab", hint: "€ / colaborador / ano" }
-      ],
-      modules: [
-        { label: "Geolocalização & Geofencing", price: 1.00, model: "mensal_colab", hint: "€ / mês por colaborador" },
-        { label: "Integração com ERP", price: 0.65, model: "mensal_colab", hint: "€ / mês por colaborador" },
-        { label: "Automatização de Processos e Envio de Relatórios", price: 8.00, model: "mensal", hint: "€ / mês" }
-      ],
-      terminals: [
-        { label: "2S-M6PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 4.3″ Luz Visível Wifi", price: 318.00, cat: "Acessos + Assiduidade" },
-        { label: "2S-M5PRO -  Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 261.00, cat: "Acessos + Assiduidade" },
-        { label: "2S-M2PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 195.00, cat: "Acessos + Assiduidade" },
-        { label: "TA500 — Terminal Controlo Assiduidade (Impressão Digital)", price: 269.00, cat: "Assiduidade" }
-      ],
-      accessories: [
-        { label: "Instalação (serviço)", price: 220.00, type:"oneoff", hint:"€" },
-        { label: "Configuração/Parametrização", price: 180.00, type:"oneoff", hint:"€" },
-        { label: "Deslocação (até 30 km)", price: 85.00, type:"oneoff", hint:"€" }
-      ],
-      renting: [
-        { label: "Renting (Instalação, Implementação, e formação remota)", price: 400.00, base: "empresa" },
-        { label: "Licença", price: 1.50, base: "colaborador" }
-      ],
-      tech: [
-        { label: "Implementação e formação remota — até 50 colaboradores", hours: 4, price: 145.00 },
-        { label: "Implementação e formação  remota — até 120 colaboradores", hours: 5, price: 160.00 }
-      ],
-      support: [
-        { label: "2SMART_SERVICE_5", includes: "5h / ano", price: 200.00 },
-        { label: "2SMART_SERVICE_10", includes: "10h / ano", price: 400.00 }
-      ]
-    };
+  const CATALOG = {
+    software: [
+      { label: "2smart HR Cloud — Licença (1º Ano)", price: 6.60, type: "mensal_colab", hint: "€ / colaborador (mês)" },
+      { label: "2smart HR Cloud — Subscrição Anual", price: 4.50, type: "anual_colab", hint: "€ / colaborador / ano" }
+    ],
+    modules: [
+      { label: "Geolocalização & Geofencing", price: 1.00, model: "mensal_colab", hint: "€ / mês por colaborador" },
+      { label: "Integração com ERP", price: 0.65, model: "mensal_colab", hint: "€ / mês por colaborador" },
+      { label: "Automatização de Processos e Envio de Relatórios", price: 8.00, model: "mensal", hint: "€ / mês" }
+    ],
+    terminals: [
+      { label: "2S-M6PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 4.3″ Luz Visível Wifi", price: 318.00, cat: "Acessos + Assiduidade" },
+      { label: "2S-M5PRO -  Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 261.00, cat: "Acessos + Assiduidade" },
+      { label: "2S-M2PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 195.00, cat: "Acessos + Assiduidade" },
+      { label: "TA500 — Terminal Controlo Assiduidade (Impressão Digital)", price: 269.00, cat: "Assiduidade" }
+    ],
+    accessories: [
+      { label: "Instalação (serviço)", price: 220.00, type:"oneoff", hint:"€" },
+      { label: "Configuração/Parametrização", price: 180.00, type:"oneoff", hint:"€" },
+      { label: "Deslocação (até 30 km)", price: 85.00, type:"oneoff", hint:"€" }
+    ],
+    renting: [
+      { label: "Renting (Instalação, Implementação, e formação remota)", price: 400.00, base: "empresa" },
+      { label: "Licença", price: 1.50, base: "colaborador" }
+    ],
+    tech: [
+      { label: "Implementação e formação remota — até 50 colaboradores", hours: 4, price: 145.00 },
+      { label: "Implementação e formação  remota — até 120 colaboradores", hours: 5, price: 160.00 }
+    ],
+    support: [
+      { label: "2SMART_SERVICE_5", includes: "5h / ano", price: 200.00 },
+      { label: "2SMART_SERVICE_10", includes: "10h / ano", price: 400.00 }
+    ]
+  };
 
-    const state = {
-      software: [],
-      modules: [],
-      terminals: [],
-      accessories: [],
-      tech: [],
-      support: [],
-      renting: [
-        { id: uid(), label: "Renting  (Instalação, Implementação, e formação remota)", unit: 400.00, collabs: 0, kind: "anual" }
-      ]
-    };
+  const defaultRentingRow = () => ({ id: uid(), label: "Renting  (Instalação, Implementação, e formação remota)", unit: 400.00, collabs: 0, kind: "anual" });
 
-    setTimeout(() => {
-      const p = document?.querySelector("#refCode");
-      if(p) p.value = "PR2S-" + (Math.random(4,8)*Math.random(8,2)*3).toString().split(".")[1];
-    }, 1200);
+  const state = {
+    software: [],
+    modules: [],
+    terminals: [],
+    accessories: [],
+    tech: [],
+    support: [],
+    renting: [ defaultRentingRow() ]
+  };
 
-    const PDF = window.__PDF_PRO__ || (window.__PDF_PRO__ = {});
-    PDF.ensureHost = PDF.ensureHost || function(){
-      let host = document.getElementById("pdfRenderHost");
-      if(!host){
-        host = document.createElement("div");
-        host.id = "pdfRenderHost";
-        document.body.appendChild(host);
+  setTimeout(() => {
+    const p = document?.querySelector("#refCode");
+    if(p) p.value = "PR2S-" + (Math.random(4,8)*Math.random(8,2)*3).toString().split(".")[1];
+  }, 1200);
+
+  const PDF = window.__PDF_PRO__ || (window.__PDF_PRO__ = {});
+  PDF.ensureHost = PDF.ensureHost || function(){
+    let host = document.getElementById("pdfRenderHost");
+    if(!host){
+      host = document.createElement("div");
+      host.id = "pdfRenderHost";
+      document.body.appendChild(host);
+    }
+    return host;
+  };
+  PDF.waitImages = PDF.waitImages || function(root){
+    const imgs = Array.from(root.querySelectorAll("img"));
+    return Promise.all(imgs.map(img => new Promise(resolve => {
+      if(img.complete && img.naturalWidth > 0) return resolve();
+      const done = () => resolve();
+      img.addEventListener("load", done, { once:true });
+      img.addEventListener("error", done, { once:true });
+    })));
+  };
+  PDF.toDataURL = PDF.toDataURL || async function(url){
+    const res = await fetch(url, { mode: "cors", cache: "no-cache" });
+    const blob = await res.blob();
+    return await new Promise((resolve) => {
+      const r = new FileReader();
+      r.onload = () => resolve(r.result);
+      r.readAsDataURL(blob);
+    });
+  };
+  PDF.inlineImages = PDF.inlineImages || async function(root){
+    const imgs = Array.from(root.querySelectorAll("img"));
+    for(const img of imgs){
+      const src = img.getAttribute("src") || "";
+      if(!src || src.startsWith("data:")) continue;
+      try{
+        const data = await PDF.toDataURL(src);
+        img.setAttribute("src", data);
+      }catch(e){}
+    }
+  };
+
+  const toggles = [
+    ["toggleSoftware", "secSoftware", "software"],
+    ["toggleModules", "secModules", "modules"],
+    ["toggleTerminals", "secTerminals", "terminals"],
+    ["toggleAccessories", "secAccessories", "accessories"],
+    ["toggleRenting", "secRenting", "renting"],
+    ["toggleTechAdvisory", "secTechAdvisory", "tech"],
+    ["toggleSupport", "secSupport", "support"]
+  ];
+
+  function clearSection(key){
+    if(key === "renting"){
+      state.renting = [ defaultRentingRow() ];
+    } else {
+      state[key] = [];
+    }
+  }
+
+  toggles.forEach(([t, s, key]) => {
+    $(t).addEventListener("change", () => {
+      const on = $(t).checked;
+      show($(s), on);
+      if(!on){
+        clearSection(key);
+        render();
+      } else {
+        if(key === "renting" && (!state.renting || state.renting.length === 0)){
+          state.renting = [ defaultRentingRow() ];
+          render();
+        }
+        recalcTotals();
       }
-      return host;
-    };
-    PDF.waitImages = PDF.waitImages || function(root){
-      const imgs = Array.from(root.querySelectorAll("img"));
-      return Promise.all(imgs.map(img => new Promise(resolve => {
-        if(img.complete && img.naturalWidth > 0) return resolve();
-        const done = () => resolve();
-        img.addEventListener("load", done, { once:true });
-        img.addEventListener("error", done, { once:true });
-      })));
-    };
-    PDF.toDataURL = PDF.toDataURL || async function(url){
-      const res = await fetch(url, { mode: "cors", cache: "no-cache" });
-      const blob = await res.blob();
-      return await new Promise((resolve) => {
-        const r = new FileReader();
-        r.onload = () => resolve(r.result);
-        r.readAsDataURL(blob);
+    });
+  });
+
+  function buildSelect(options, selectedLabel){
+    const sel = document.createElement("select");
+    sel.className = "form-select form-select-sm";
+    options.forEach(o => {
+      const opt = document.createElement("option");
+      opt.value = o.label;
+      opt.textContent = o.label;
+      if (selectedLabel && selectedLabel === o.label) opt.selected = true;
+      sel.appendChild(opt);
+    });
+    return sel;
+  }
+
+  function buildInput(value, placeholder, min=0, step="1"){
+    const inp = document.createElement("input");
+    inp.className = "form-control form-control-sm";
+    inp.value = value ?? "";
+    inp.placeholder = placeholder || "";
+    inp.inputMode = "decimal";
+    inp.min = min;
+    inp.step = step;
+    return inp;
+  }
+
+  function buildQty(value=1){
+    const inp = buildInput(value, "1", 0, "1");
+    inp.type = "number";
+    return inp;
+  }
+
+  function buildMoney(value){
+    const inp = buildInput(value, "0,00", 0, "0.01");
+    inp.type = "number";
+    inp.step = "0.01";
+    return inp;
+  }
+
+  function addRow(section, row){
+    state[section].push(row);
+    render();
+  }
+
+  function removeRow(section, id){
+    state[section] = state[section].filter(r => r.id !== id);
+    render();
+  }
+
+  function render(){
+    renderSoftware();
+    renderModules();
+    renderTerminals();
+    renderAccessories();
+    renderRenting();
+    renderTech();
+    renderSupport();
+    recalcTotals();
+  }
+
+  function renderSoftware(){
+    const tbody = $("softwareBody");
+    tbody.innerHTML = "";
+    state.software.forEach(r => {
+      const tr = document.createElement("tr");
+
+      const tdItem = document.createElement("td");
+      const sel = buildSelect(CATALOG.software, r.label);
+      tdItem.appendChild(sel);
+
+      const hint = document.createElement("div");
+      hint.className = "muted";
+      hint.textContent = (CATALOG.software.find(x => x.label === r.label)?.hint) || "";
+      tdItem.appendChild(hint);
+
+      const tdQty = document.createElement("td");
+      const qty = buildQty(r.qty);
+      tdQty.appendChild(qty);
+
+      const tdUnit = document.createElement("td");
+      const unit = buildMoney(r.unit);
+      tdUnit.appendChild(unit);
+
+      const tdType = document.createElement("td");
+      const typeSel = document.createElement("select");
+      typeSel.className = "form-select form-select-sm";
+      [
+        {v:"anual", t:"Anual"},
+        {v:"mensal", t:"Mensal"},
+        {v:"oneoff", t:"One-off"}
+      ].forEach(o=>{
+        const opt=document.createElement("option");
+        opt.value=o.v; opt.textContent=o.t;
+        if (r.kind===o.v) opt.selected=true;
+        typeSel.appendChild(opt);
       });
-    };
-    PDF.inlineImages = PDF.inlineImages || async function(root){
-      const imgs = Array.from(root.querySelectorAll("img"));
-      for(const img of imgs){
-        const src = img.getAttribute("src") || "";
-        if(!src || src.startsWith("data:")) continue;
-        try{
-          const data = await PDF.toDataURL(src);
-          img.setAttribute("src", data);
-        }catch(e){}
-      }
-    };
+      tdType.appendChild(typeSel);
 
-    const toggles = [
-      ["toggleSoftware", "secSoftware"],
-      ["toggleModules", "secModules"],
-      ["toggleTerminals", "secTerminals"],
-      ["toggleAccessories", "secAccessories"],
-      ["toggleRenting", "secRenting"],
-      ["toggleTechAdvisory", "secTechAdvisory"],
-      ["toggleSupport", "secSupport"]
-    ];
-    toggles.forEach(([t, s]) => {
-      $(t).addEventListener("change", () => {
-        show($(s), $(t).checked);
+      const tdDel = document.createElement("td");
+      tdDel.className = "text-end";
+      const del = document.createElement("button");
+      del.className = "btn btn-sm btn-outline-danger";
+      del.type = "button";
+      del.innerHTML = '<i class="bi bi-trash"></i>';
+      tdDel.appendChild(del);
+
+      sel.addEventListener("change", () => {
+        r.label = sel.value;
+        const found = CATALOG.software.find(x => x.label === r.label);
+        if(found){
+          r.unit = found.price;
+          r.kind = found.type?.startsWith("anual") ? "anual" : (found.type?.startsWith("mensal") ? "mensal" : "oneoff");
+        }
+        render();
+      });
+
+      qty.addEventListener("input", ()=>{ r.qty = num(qty.value); recalcTotals(); });
+      unit.addEventListener("input", ()=>{ r.unit = num(unit.value); recalcTotals(); });
+      typeSel.addEventListener("change", ()=>{ r.kind = typeSel.value; recalcTotals(); });
+      del.addEventListener("click", ()=> removeRow("software", r.id));
+
+      tr.append(tdItem, tdQty, tdUnit, tdType, tdDel);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderModules(){
+    const tbody = $("modulesBody");
+    tbody.innerHTML = "";
+    state.modules.forEach(r => {
+      const tr = document.createElement("tr");
+
+      const tdItem = document.createElement("td");
+      const sel = buildSelect(CATALOG.modules, r.label);
+      tdItem.appendChild(sel);
+      const hint = document.createElement("div");
+      hint.className = "muted";
+      hint.textContent = (CATALOG.modules.find(x => x.label === r.label)?.hint) || "";
+      tdItem.appendChild(hint);
+
+      const tdQty = document.createElement("td");
+      const qty = buildQty(r.qty);
+      tdQty.appendChild(qty);
+
+      const tdUnit = document.createElement("td");
+      const unit = buildMoney(r.unit);
+      tdUnit.appendChild(unit);
+
+      const tdModel = document.createElement("td");
+      const modelSel = document.createElement("select");
+      modelSel.className="form-select form-select-sm";
+      [
+        {v:"oneoff", t:"Disponibilização"},
+        {v:"anual", t:"Impacto anual"}
+      ].forEach(o=>{
+        const opt=document.createElement("option");
+        opt.value=o.v; opt.textContent=o.t;
+        if (r.model===o.v) opt.selected=true;
+        modelSel.appendChild(opt);
+      });
+      tdModel.appendChild(modelSel);
+
+      const tdDel = document.createElement("td");
+      tdDel.className="text-end";
+      const del = document.createElement("button");
+      del.className="btn btn-sm btn-outline-danger";
+      del.type="button";
+      del.innerHTML='<i class="bi bi-trash"></i>';
+      tdDel.appendChild(del);
+
+      sel.addEventListener("change", () => {
+        r.label = sel.value;
+        const found = CATALOG.modules.find(x => x.label === r.label);
+        if(found) r.unit = found.price;
+        render();
+      });
+
+      qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
+      unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
+      modelSel.addEventListener("change", ()=>{ r.model=modelSel.value; recalcTotals(); });
+      del.addEventListener("click", ()=> removeRow("modules", r.id));
+
+      tr.append(tdItem, tdQty, tdUnit, tdModel, tdDel);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderTerminals(){
+    const tbody = $("terminalsBody");
+    tbody.innerHTML = "";
+    state.terminals.forEach(r => {
+      const tr = document.createElement("tr");
+
+      const tdItem = document.createElement("td");
+      const sel = buildSelect(CATALOG.terminals, r.label);
+      tdItem.appendChild(sel);
+
+      const tdQty = document.createElement("td");
+      const qty = buildQty(r.qty);
+      tdQty.appendChild(qty);
+
+      const tdUnit = document.createElement("td");
+      const unit = buildMoney(r.unit);
+      tdUnit.appendChild(unit);
+
+      const tdCat = document.createElement("td");
+      tdCat.textContent = r.cat || "—";
+      tdCat.style.fontWeight = "800";
+      tdCat.style.color = "#0b2e7a";
+
+      const tdDel = document.createElement("td");
+      tdDel.className="text-end";
+      const del = document.createElement("button");
+      del.className="btn btn-sm btn-outline-danger";
+      del.type="button";
+      del.innerHTML='<i class="bi bi-trash"></i>';
+      tdDel.appendChild(del);
+
+      sel.addEventListener("change", () => {
+        r.label = sel.value;
+        const found = CATALOG.terminals.find(x => x.label === r.label);
+        if(found){
+          r.unit = found.price;
+          r.cat = found.cat;
+        }
+        render();
+      });
+
+      qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
+      unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
+      del.addEventListener("click", ()=> removeRow("terminals", r.id));
+
+      tr.append(tdItem, tdQty, tdUnit, tdCat, tdDel);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderAccessories(){
+    const tbody = $("accessoriesBody");
+    tbody.innerHTML = "";
+    state.accessories.forEach(r => {
+      const tr = document.createElement("tr");
+
+      const tdItem = document.createElement("td");
+      const sel = buildSelect(CATALOG.accessories, r.label);
+      tdItem.appendChild(sel);
+      const hint = document.createElement("div");
+      hint.className="muted";
+      hint.textContent = (CATALOG.accessories.find(x=>x.label===r.label)?.hint) || "";
+      tdItem.appendChild(hint);
+
+      const tdQty = document.createElement("td");
+      const qty = buildQty(r.qty);
+      tdQty.appendChild(qty);
+
+      const tdUnit = document.createElement("td");
+      const unit = buildMoney(r.unit);
+      tdUnit.appendChild(unit);
+
+      const tdType = document.createElement("td");
+      const typeSel = document.createElement("select");
+      typeSel.className="form-select form-select-sm";
+      [
+        {v:"oneoff", t:"One-off"},
+        {v:"anual", t:"Anual"}
+      ].forEach(o=>{
+        const opt=document.createElement("option");
+        opt.value=o.v; opt.textContent=o.t;
+        if (r.kind===o.v) opt.selected=true;
+        typeSel.appendChild(opt);
+      });
+      tdType.appendChild(typeSel);
+
+      const tdDel = document.createElement("td");
+      tdDel.className="text-end";
+      const del = document.createElement("button");
+      del.className="btn btn-sm btn-outline-danger";
+      del.type="button";
+      del.innerHTML='<i class="bi bi-trash"></i>';
+      tdDel.appendChild(del);
+
+      sel.addEventListener("change", ()=>{
+        r.label = sel.value;
+        const found = CATALOG.accessories.find(x=>x.label===r.label);
+        if(found) r.unit = found.price;
+        render();
+      });
+
+      qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
+      unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
+      typeSel.addEventListener("change", ()=>{ r.kind=typeSel.value; recalcTotals(); });
+      del.addEventListener("click", ()=> removeRow("accessories", r.id));
+
+      tr.append(tdItem, tdQty, tdUnit, tdType, tdDel);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function rentingLineTotal(r){
+    const found = CATALOG.renting.find(x => x.label === r.label);
+    const base = found?.base || "empresa";
+    if(base === "empresa") return 1 * num(r.unit);
+    return Math.max(0, Math.floor(num(r.collabs))) * num(r.unit);
+  }
+
+  function renderRenting(){
+    const tbody = $("rentingBody");
+    tbody.innerHTML = "";
+
+    state.renting.forEach(r => {
+      const tr = document.createElement("tr");
+
+      const tdItem = document.createElement("td");
+      const sel = buildSelect(CATALOG.renting, r.label);
+      tdItem.appendChild(sel);
+
+      const tdCollabs = document.createElement("td");
+      const collabs = buildQty(r.collabs ?? 0);
+      collabs.placeholder = "0";
+      tdCollabs.appendChild(collabs);
+
+      const tdUnit = document.createElement("td");
+      const unit = buildMoney(r.unit);
+      tdUnit.appendChild(unit);
+
+      const tdKind = document.createElement("td");
+      const kindSel = document.createElement("select");
+      kindSel.className = "form-select form-select-sm";
+      [
+        {v:"mensal", t:"Mensal"},
+        {v:"anual", t:"Anual"},
+        {v:"oneoff", t:"One-off"}
+      ].forEach(o=>{
+        const opt=document.createElement("option");
+        opt.value=o.v; opt.textContent=o.t;
+        if (r.kind===o.v) opt.selected=true;
+        kindSel.appendChild(opt);
+      });
+      tdKind.appendChild(kindSel);
+
+      const tdDel = document.createElement("td");
+      tdDel.className = "text-end";
+      const del = document.createElement("button");
+      del.className = "btn btn-sm btn-outline-danger";
+      del.type = "button";
+      del.innerHTML = '<i class="bi bi-trash"></i>';
+      tdDel.appendChild(del);
+
+      const applyRules = () => {
+        const found = CATALOG.renting.find(x => x.label === r.label);
+        const base = found?.base || "empresa";
+
+        if(found){
+          r.unit = found.price;
+          unit.value = r.unit;
+        }
+
+        if(base === "empresa"){
+          r.collabs = 0;
+          collabs.value = 0;
+          tdCollabs.innerHTML = '<span style="font-weight:900;color:#0b2e7a">—</span>';
+        } else {
+          tdCollabs.innerHTML = "";
+          tdCollabs.appendChild(collabs);
+        }
+
+        if(r.label === "Licença"){
+          kindSel.innerHTML = "";
+          [
+            {v:"mensal", t:"Mensal"},
+            {v:"anual", t:"Anual"}
+          ].forEach(o=>{
+            const opt=document.createElement("option");
+            opt.value=o.v; opt.textContent=o.t;
+            kindSel.appendChild(opt);
+          });
+          if(r.kind !== "mensal" && r.kind !== "anual") r.kind = "mensal";
+          kindSel.value = r.kind;
+        } else {
+          kindSel.innerHTML = "";
+          [
+            {v:"mensal", t:"Mensal"},
+            {v:"anual", t:"Anual"},
+            {v:"oneoff", t:"One-off"}
+          ].forEach(o=>{
+            const opt=document.createElement("option");
+            opt.value=o.v; opt.textContent=o.t;
+            kindSel.appendChild(opt);
+          });
+          if(!["mensal","anual","oneoff"].includes(r.kind)) r.kind = "anual";
+          kindSel.value = r.kind;
+        }
+      };
+
+      sel.addEventListener("change", () => {
+        r.label = sel.value;
+        applyRules();
         recalcTotals();
       });
-    });
 
-    function buildSelect(options, selectedLabel){
-      const sel = document.createElement("select");
-      sel.className = "form-select form-select-sm";
-      options.forEach(o => {
-        const opt = document.createElement("option");
-        opt.value = o.label;
-        opt.textContent = o.label;
-        if (selectedLabel && selectedLabel === o.label) opt.selected = true;
-        sel.appendChild(opt);
-      });
-      return sel;
-    }
+      collabs.addEventListener("input", ()=>{ r.collabs = Math.max(0, Math.floor(num(collabs.value))); recalcTotals(); });
+      unit.addEventListener("input", ()=>{ r.unit = num(unit.value); recalcTotals(); });
+      kindSel.addEventListener("change", ()=>{ r.kind = kindSel.value; recalcTotals(); });
 
-    function buildInput(value, placeholder, min=0, step="1"){
-      const inp = document.createElement("input");
-      inp.className = "form-control form-control-sm";
-      inp.value = value ?? "";
-      inp.placeholder = placeholder || "";
-      inp.inputMode = "decimal";
-      inp.min = min;
-      inp.step = step;
-      return inp;
-    }
-
-    function buildQty(value=1){
-      const inp = buildInput(value, "1", 0, "1");
-      inp.type = "number";
-      return inp;
-    }
-
-    function buildMoney(value){
-      const inp = buildInput(value, "0,00", 0, "0.01");
-      inp.type = "number";
-      inp.step = "0.01";
-      return inp;
-    }
-
-    function addRow(section, row){
-      state[section].push(row);
-      render();
-    }
-
-    function removeRow(section, id){
-      state[section] = state[section].filter(r => r.id !== id);
-      render();
-    }
-
-    function render(){
-      renderSoftware();
-      renderModules();
-      renderTerminals();
-      renderAccessories();
-      renderRenting();
-      renderTech();
-      renderSupport();
-      recalcTotals();
-    }
-
-    function renderSoftware(){
-      const tbody = $("softwareBody");
-      tbody.innerHTML = "";
-      state.software.forEach(r => {
-        const tr = document.createElement("tr");
-
-        const tdItem = document.createElement("td");
-        const sel = buildSelect(CATALOG.software, r.label);
-        tdItem.appendChild(sel);
-
-        const hint = document.createElement("div");
-        hint.className = "muted";
-        hint.textContent = (CATALOG.software.find(x => x.label === r.label)?.hint) || "";
-        tdItem.appendChild(hint);
-
-        const tdQty = document.createElement("td");
-        const qty = buildQty(r.qty);
-        tdQty.appendChild(qty);
-
-        const tdUnit = document.createElement("td");
-        const unit = buildMoney(r.unit);
-        tdUnit.appendChild(unit);
-
-        const tdType = document.createElement("td");
-        const typeSel = document.createElement("select");
-        typeSel.className = "form-select form-select-sm";
-        [
-          {v:"anual", t:"Anual"},
-          {v:"mensal", t:"Mensal"},
-          {v:"oneoff", t:"One-off"}
-        ].forEach(o=>{
-          const opt=document.createElement("option");
-          opt.value=o.v; opt.textContent=o.t;
-          if (r.kind===o.v) opt.selected=true;
-          typeSel.appendChild(opt);
-        });
-        tdType.appendChild(typeSel);
-
-        const tdDel = document.createElement("td");
-        tdDel.className = "text-end";
-        const del = document.createElement("button");
-        del.className = "btn btn-sm btn-outline-danger";
-        del.type = "button";
-        del.innerHTML = '<i class="bi bi-trash"></i>';
-        tdDel.appendChild(del);
-
-        sel.addEventListener("change", () => {
-          r.label = sel.value;
-          const found = CATALOG.software.find(x => x.label === r.label);
-          if(found){
-            r.unit = found.price;
-            r.kind = found.type?.startsWith("anual") ? "anual" : (found.type?.startsWith("mensal") ? "mensal" : "oneoff");
-          }
-          render();
-        });
-
-        qty.addEventListener("input", ()=>{ r.qty = num(qty.value); recalcTotals(); });
-        unit.addEventListener("input", ()=>{ r.unit = num(unit.value); recalcTotals(); });
-        typeSel.addEventListener("change", ()=>{ r.kind = typeSel.value; recalcTotals(); });
-        del.addEventListener("click", ()=> removeRow("software", r.id));
-
-        tr.append(tdItem, tdQty, tdUnit, tdType, tdDel);
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderModules(){
-      const tbody = $("modulesBody");
-      tbody.innerHTML = "";
-      state.modules.forEach(r => {
-        const tr = document.createElement("tr");
-
-        const tdItem = document.createElement("td");
-        const sel = buildSelect(CATALOG.modules, r.label);
-        tdItem.appendChild(sel);
-        const hint = document.createElement("div");
-        hint.className = "muted";
-        hint.textContent = (CATALOG.modules.find(x => x.label === r.label)?.hint) || "";
-        tdItem.appendChild(hint);
-
-        const tdQty = document.createElement("td");
-        const qty = buildQty(r.qty);
-        tdQty.appendChild(qty);
-
-        const tdUnit = document.createElement("td");
-        const unit = buildMoney(r.unit);
-        tdUnit.appendChild(unit);
-
-        const tdModel = document.createElement("td");
-        const modelSel = document.createElement("select");
-        modelSel.className="form-select form-select-sm";
-        [
-          {v:"oneoff", t:"Disponibilização"},
-          {v:"anual", t:"Impacto anual"}
-        ].forEach(o=>{
-          const opt=document.createElement("option");
-          opt.value=o.v; opt.textContent=o.t;
-          if (r.model===o.v) opt.selected=true;
-          modelSel.appendChild(opt);
-        });
-        tdModel.appendChild(modelSel);
-
-        const tdDel = document.createElement("td");
-        tdDel.className="text-end";
-        const del = document.createElement("button");
-        del.className="btn btn-sm btn-outline-danger";
-        del.type="button";
-        del.innerHTML='<i class="bi bi-trash"></i>';
-        tdDel.appendChild(del);
-
-        sel.addEventListener("change", () => {
-          r.label = sel.value;
-          const found = CATALOG.modules.find(x => x.label === r.label);
-          if(found) r.unit = found.price;
-          render();
-        });
-
-        qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
-        unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
-        modelSel.addEventListener("change", ()=>{ r.model=modelSel.value; recalcTotals(); });
-        del.addEventListener("click", ()=> removeRow("modules", r.id));
-
-        tr.append(tdItem, tdQty, tdUnit, tdModel, tdDel);
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderTerminals(){
-      const tbody = $("terminalsBody");
-      tbody.innerHTML = "";
-      state.terminals.forEach(r => {
-        const tr = document.createElement("tr");
-
-        const tdItem = document.createElement("td");
-        const sel = buildSelect(CATALOG.terminals, r.label);
-        tdItem.appendChild(sel);
-
-        const tdQty = document.createElement("td");
-        const qty = buildQty(r.qty);
-        tdQty.appendChild(qty);
-
-        const tdUnit = document.createElement("td");
-        const unit = buildMoney(r.unit);
-        tdUnit.appendChild(unit);
-
-        const tdCat = document.createElement("td");
-        tdCat.textContent = r.cat || "—";
-        tdCat.style.fontWeight = "800";
-        tdCat.style.color = "#0b2e7a";
-
-        const tdDel = document.createElement("td");
-        tdDel.className="text-end";
-        const del = document.createElement("button");
-        del.className="btn btn-sm btn-outline-danger";
-        del.type="button";
-        del.innerHTML='<i class="bi bi-trash"></i>';
-        tdDel.appendChild(del);
-
-        sel.addEventListener("change", () => {
-          r.label = sel.value;
-          const found = CATALOG.terminals.find(x => x.label === r.label);
-          if(found){
-            r.unit = found.price;
-            r.cat = found.cat;
-          }
-          render();
-        });
-
-        qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
-        unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
-        del.addEventListener("click", ()=> removeRow("terminals", r.id));
-
-        tr.append(tdItem, tdQty, tdUnit, tdCat, tdDel);
-        tbody.appendChild(tr);
-      });
-    }
-
-    function renderAccessories(){
-      const tbody = $("accessoriesBody");
-      tbody.innerHTML = "";
-      state.accessories.forEach(r => {
-        const tr = document.createElement("tr");
-
-        const tdItem = document.createElement("td");
-        const sel = buildSelect(CATALOG.accessories, r.label);
-        tdItem.appendChild(sel);
-        const hint = document.createElement("div");
-        hint.className="muted";
-        hint.textContent = (CATALOG.accessories.find(x=>x.label===r.label)?.hint) || "";
-        tdItem.appendChild(hint);
-
-        const tdQty = document.createElement("td");
-        const qty = buildQty(r.qty);
-        tdQty.appendChild(qty);
-
-        const tdUnit = document.createElement("td");
-        const unit = buildMoney(r.unit);
-        tdUnit.appendChild(unit);
-
-        const tdType = document.createElement("td");
-        const typeSel = document.createElement("select");
-        typeSel.className="form-select form-select-sm";
-        [
-          {v:"oneoff", t:"One-off"},
-          {v:"anual", t:"Anual"}
-        ].forEach(o=>{
-          const opt=document.createElement("option");
-          opt.value=o.v; opt.textContent=o.t;
-          if (r.kind===o.v) opt.selected=true;
-          typeSel.appendChild(opt);
-        });
-        tdType.appendChild(typeSel);
-
-        const tdDel = document.createElement("td");
-        tdDel.className="text-end";
-        const del = document.createElement("button");
-        del.className="btn btn-sm btn-outline-danger";
-        del.type="button";
-        del.innerHTML='<i class="bi bi-trash"></i>';
-        tdDel.appendChild(del);
-
-        sel.addEventListener("change", ()=>{
-          r.label = sel.value;
-          const found = CATALOG.accessories.find(x=>x.label===r.label);
-          if(found) r.unit = found.price;
-          render();
-        });
-
-        qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
-        unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
-        typeSel.addEventListener("change", ()=>{ r.kind=typeSel.value; recalcTotals(); });
-        del.addEventListener("click", ()=> removeRow("accessories", r.id));
-
-        tr.append(tdItem, tdQty, tdUnit, tdType, tdDel);
-        tbody.appendChild(tr);
-      });
-    }
-
-    function rentingLineTotal(r){
-      const found = CATALOG.renting.find(x => x.label === r.label);
-      const base = found?.base || "empresa";
-      if(base === "empresa") return 1 * num(r.unit);
-      return Math.max(0, Math.floor(num(r.collabs))) * num(r.unit);
-    }
-
-    function renderRenting(){
-      const tbody = $("rentingBody");
-      tbody.innerHTML = "";
-
-      state.renting.forEach(r => {
-        const tr = document.createElement("tr");
-
-        const tdItem = document.createElement("td");
-        const sel = buildSelect(CATALOG.renting, r.label);
-        tdItem.appendChild(sel);
-
-        const tdCollabs = document.createElement("td");
-        const collabs = buildQty(r.collabs ?? 0);
-        collabs.placeholder = "0";
-        tdCollabs.appendChild(collabs);
-
-        const tdUnit = document.createElement("td");
-        const unit = buildMoney(r.unit);
-        tdUnit.appendChild(unit);
-
-        const tdKind = document.createElement("td");
-        const kindSel = document.createElement("select");
-        kindSel.className = "form-select form-select-sm";
-        [
-          {v:"mensal", t:"Mensal"},
-          {v:"anual", t:"Anual"},
-          {v:"oneoff", t:"One-off"}
-        ].forEach(o=>{
-          const opt=document.createElement("option");
-          opt.value=o.v; opt.textContent=o.t;
-          if (r.kind===o.v) opt.selected=true;
-          kindSel.appendChild(opt);
-        });
-        tdKind.appendChild(kindSel);
-
-        const tdDel = document.createElement("td");
-        tdDel.className = "text-end";
-        const del = document.createElement("button");
-        del.className = "btn btn-sm btn-outline-danger";
-        del.type = "button";
-        del.innerHTML = '<i class="bi bi-trash"></i>';
-        tdDel.appendChild(del);
-
-        const applyRules = () => {
-          const found = CATALOG.renting.find(x => x.label === r.label);
-          const base = found?.base || "empresa";
-
-          if(found){
-            r.unit = found.price;
-            unit.value = r.unit;
-          }
-
-          if(base === "empresa"){
-            r.collabs = 0;
-            collabs.value = 0;
-            tdCollabs.innerHTML = '<span style="font-weight:900;color:#0b2e7a">—</span>';
-          } else {
-            tdCollabs.innerHTML = "";
-            tdCollabs.appendChild(collabs);
-          }
-
-          if(r.label === "Licença"){
-            kindSel.innerHTML = "";
-            [
-              {v:"mensal", t:"Mensal"},
-              {v:"anual", t:"Anual"}
-            ].forEach(o=>{
-              const opt=document.createElement("option");
-              opt.value=o.v; opt.textContent=o.t;
-              kindSel.appendChild(opt);
-            });
-            if(r.kind !== "mensal" && r.kind !== "anual") r.kind = "mensal";
-            kindSel.value = r.kind;
-          } else {
-            kindSel.innerHTML = "";
-            [
-              {v:"mensal", t:"Mensal"},
-              {v:"anual", t:"Anual"},
-              {v:"oneoff", t:"One-off"}
-            ].forEach(o=>{
-              const opt=document.createElement("option");
-              opt.value=o.v; opt.textContent=o.t;
-              kindSel.appendChild(opt);
-            });
-            if(!["mensal","anual","oneoff"].includes(r.kind)) r.kind = "anual";
-            kindSel.value = r.kind;
-          }
-        };
-
-        sel.addEventListener("change", () => {
-          r.label = sel.value;
-          applyRules();
+      del.addEventListener("click", ()=>{
+        if(state.renting.length === 1){
+          const d = defaultRentingRow();
+          r.label = d.label;
+          r.unit = d.unit;
+          r.collabs = d.collabs;
+          r.kind = d.kind;
+          renderRenting();
           recalcTotals();
-        });
-
-        collabs.addEventListener("input", ()=>{ r.collabs = Math.max(0, Math.floor(num(collabs.value))); recalcTotals(); });
-        unit.addEventListener("input", ()=>{ r.unit = num(unit.value); recalcTotals(); });
-        kindSel.addEventListener("change", ()=>{ r.kind = kindSel.value; recalcTotals(); });
-
-        del.addEventListener("click", ()=>{
-          if(state.renting.length === 1){
-            r.label = "Renting";
-            r.unit = 400.00;
-            r.collabs = 0;
-            r.kind = "anual";
-            renderRenting();
-            recalcTotals();
-            return;
-          }
-          state.renting = state.renting.filter(x => x.id !== r.id);
-          render();
-        });
-
-        tr.append(tdItem, tdCollabs, tdUnit, tdKind, tdDel);
-        tbody.appendChild(tr);
-
-        applyRules();
+          return;
+        }
+        state.renting = state.renting.filter(x => x.id !== r.id);
+        render();
       });
-    }
 
-    function renderTech(){
-      const tbody = $("techBody");
-      tbody.innerHTML = "";
-      state.tech.forEach(r=>{
-        const tr=document.createElement("tr");
+      tr.append(tdItem, tdCollabs, tdUnit, tdKind, tdDel);
+      tbody.appendChild(tr);
 
-        const tdPack=document.createElement("td");
-        const sel=buildSelect(CATALOG.tech, r.label);
-        tdPack.appendChild(sel);
+      applyRules();
+    });
+  }
 
-        const tdHours=document.createElement("td");
-        const hours=buildInput(r.hours ?? "", "Horas", 0, "1");
-        hours.type="number";
-        tdHours.appendChild(hours);
+  function renderTech(){
+    const tbody = $("techBody");
+    tbody.innerHTML = "";
+    state.tech.forEach(r=>{
+      const tr=document.createElement("tr");
 
-        const tdQty=document.createElement("td");
-        const qty=buildQty(r.qty);
-        tdQty.appendChild(qty);
+      const tdPack=document.createElement("td");
+      const sel=buildSelect(CATALOG.tech, r.label);
+      tdPack.appendChild(sel);
 
-        const tdUnit=document.createElement("td");
-        const unit=buildMoney(r.unit);
-        tdUnit.appendChild(unit);
+      const tdHours=document.createElement("td");
+      const hours=buildInput(r.hours ?? "", "Horas", 0, "1");
+      hours.type="number";
+      tdHours.appendChild(hours);
 
-        const tdDel=document.createElement("td");
-        tdDel.className="text-end";
-        const del=document.createElement("button");
-        del.className="btn btn-sm btn-outline-danger";
-        del.type="button";
-        del.innerHTML='<i class="bi bi-trash"></i>';
-        tdDel.appendChild(del);
+      const tdQty=document.createElement("td");
+      const qty=buildQty(r.qty);
+      tdQty.appendChild(qty);
 
-        sel.addEventListener("change", ()=>{
-          r.label=sel.value;
-          const found=CATALOG.tech.find(x=>x.label===r.label);
-          if(found){
-            r.hours = found.hours;
-            r.unit = found.price;
-          }
-          render();
-        });
+      const tdUnit=document.createElement("td");
+      const unit=buildMoney(r.unit);
+      tdUnit.appendChild(unit);
 
-        hours.addEventListener("input", ()=>{ r.hours=num(hours.value); });
-        qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
-        unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
-        del.addEventListener("click", ()=> removeRow("tech", r.id));
+      const tdDel=document.createElement("td");
+      tdDel.className="text-end";
+      const del=document.createElement("button");
+      del.className="btn btn-sm btn-outline-danger";
+      del.type="button";
+      del.innerHTML='<i class="bi bi-trash"></i>';
+      tdDel.appendChild(del);
 
-        tr.append(tdPack, tdHours, tdQty, tdUnit, tdDel);
-        tbody.appendChild(tr);
+      sel.addEventListener("change", ()=>{
+        r.label=sel.value;
+        const found=CATALOG.tech.find(x=>x.label===r.label);
+        if(found){
+          r.hours = found.hours;
+          r.unit = found.price;
+        }
+        render();
       });
-    }
 
-    function renderSupport(){
-      const tbody=$("supportBody");
-      tbody.innerHTML="";
-      state.support.forEach(r=>{
-        const tr=document.createElement("tr");
+      hours.addEventListener("input", ()=>{ r.hours=num(hours.value); });
+      qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
+      unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
+      del.addEventListener("click", ()=> removeRow("tech", r.id));
 
-        const tdPack=document.createElement("td");
-        const sel=buildSelect(CATALOG.support, r.label);
-        tdPack.appendChild(sel);
+      tr.append(tdPack, tdHours, tdQty, tdUnit, tdDel);
+      tbody.appendChild(tr);
+    });
+  }
 
-        const tdInc=document.createElement("td");
-        tdInc.textContent = r.includes || "—";
-        tdInc.style.fontWeight = "800";
-        tdInc.style.color = "#0b2e7a";
+  function renderSupport(){
+    const tbody=$("supportBody");
+    tbody.innerHTML="";
+    state.support.forEach(r=>{
+      const tr=document.createElement("tr");
 
-        const tdQty=document.createElement("td");
-        const qty=buildQty(r.qty);
-        tdQty.appendChild(qty);
+      const tdPack=document.createElement("td");
+      const sel=buildSelect(CATALOG.support, r.label);
+      tdPack.appendChild(sel);
 
-        const tdUnit=document.createElement("td");
-        const unit=buildMoney(r.unit);
-        tdUnit.appendChild(unit);
+      const tdInc=document.createElement("td");
+      tdInc.textContent = r.includes || "—";
+      tdInc.style.fontWeight = "800";
+      tdInc.style.color = "#0b2e7a";
 
-        const tdDel=document.createElement("td");
-        tdDel.className="text-end";
-        const del=document.createElement("button");
-        del.className="btn btn-sm btn-outline-danger";
-        del.type="button";
-        del.innerHTML='<i class="bi bi-trash"></i>';
-        tdDel.appendChild(del);
+      const tdQty=document.createElement("td");
+      const qty=buildQty(r.qty);
+      tdQty.appendChild(qty);
 
-        sel.addEventListener("change", ()=>{
-          r.label=sel.value;
-          const found=CATALOG.support.find(x=>x.label===r.label);
-          if(found){
-            r.includes = found.includes;
-            r.unit = found.price;
-          }
-          render();
-        });
+      const tdUnit=document.createElement("td");
+      const unit=buildMoney(r.unit);
+      tdUnit.appendChild(unit);
 
-        qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
-        unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
-        del.addEventListener("click", ()=> removeRow("support", r.id));
+      const tdDel=document.createElement("td");
+      tdDel.className="text-end";
+      const del=document.createElement("button");
+      del.className="btn btn-sm btn-outline-danger";
+      del.type="button";
+      del.innerHTML='<i class="bi bi-trash"></i>';
+      tdDel.appendChild(del);
 
-        tr.append(tdPack, tdInc, tdQty, tdUnit, tdDel);
-        tbody.appendChild(tr);
+      sel.addEventListener("change", ()=>{
+        r.label=sel.value;
+        const found=CATALOG.support.find(x=>x.label===r.label);
+        if(found){
+          r.includes = found.includes;
+          r.unit = found.price;
+        }
+        render();
       });
-    }
 
-    function recalcTotals(){
-      let annual = 0;
-      let monthly = 0;
-      let oneoff = 0;
+      qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
+      unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
+      del.addEventListener("click", ()=> removeRow("support", r.id));
 
+      tr.append(tdPack, tdInc, tdQty, tdUnit, tdDel);
+      tbody.appendChild(tr);
+    });
+  }
+
+  function recalcTotals(){
+    let annual = 0;
+    let monthly = 0;
+    let oneoff = 0;
+
+    if ($("toggleSoftware").checked){
       state.software.forEach(r=>{
         const line = num(r.qty) * num(r.unit);
         if (r.kind === "anual") annual += line;
         else if (r.kind === "mensal") monthly += line;
         else oneoff += line;
       });
+    }
 
+    if ($("toggleModules").checked){
       state.modules.forEach(r=>{
         const line = num(r.qty) * num(r.unit);
         if (r.model === "anual") annual += line;
         else oneoff += line;
       });
+    }
 
+    if ($("toggleTerminals").checked){
       state.terminals.forEach(r=>{ oneoff += num(r.qty) * num(r.unit); });
+    }
 
+    if ($("toggleAccessories").checked){
       state.accessories.forEach(r=>{
         const line = num(r.qty) * num(r.unit);
         if (r.kind === "anual") annual += line;
         else oneoff += line;
       });
+    }
 
+    if ($("toggleTechAdvisory").checked){
       state.tech.forEach(r=>{ oneoff += num(r.qty) * num(r.unit); });
+    }
+
+    if ($("toggleSupport").checked){
       state.support.forEach(r=>{ oneoff += num(r.qty) * num(r.unit); });
-
-      if ($("toggleRenting").checked){
-        state.renting.forEach(r=>{
-          const line = rentingLineTotal(r);
-          if(r.kind === "mensal") monthly += line;
-          else if(r.kind === "anual") annual += line;
-          else oneoff += line;
-        });
-      }
-
-      const grand = annual + oneoff;
-
-      $("annualTotal").textContent = eur(annual);
-      $("monthlyTotal").textContent = eur(monthly);
-      $("oneoffTotal").textContent = eur(oneoff);
-      $("grandTotal").textContent = eur(grand);
     }
 
-    function addDefaultRow(section, catalog, label){
-      const found = catalog.find(x=>x.label===label) || catalog[0];
-      if (!found) return;
-
-      if (section === "software"){
-        addRow("software", { id: uid(), label: found.label, qty: 1, unit: found.price, kind: (found.type?.startsWith("anual") ? "anual" : (found.type?.startsWith("mensal") ? "mensal" : "oneoff")) });
-      } else if (section === "modules"){
-        addRow("modules", { id: uid(), label: found.label, qty: 1, unit: found.price, model: "oneoff" });
-      } else if (section === "terminals"){
-        addRow("terminals", { id: uid(), label: found.label, qty: 1, unit: found.price, cat: found.cat });
-      } else if (section === "accessories"){
-        addRow("accessories", { id: uid(), label: found.label, qty: 1, unit: found.price, kind: "oneoff" });
-      } else if (section === "tech"){
-        addRow("tech", { id: uid(), label: found.label, hours: found.hours, qty: 1, unit: found.price });
-      } else if (section === "support"){
-        addRow("support", { id: uid(), label: found.label, includes: found.includes, qty: 1, unit: found.price });
-      }
-    }
-
-    function addRentingRow(){
-      const found = CATALOG.renting[0];
-      addRow("renting", { id: uid(), label: found.label, unit: found.price, collabs: 0, kind: "anual" });
-    }
-
-    $("addSoftwareRow").addEventListener("click", ()=> addDefaultRow("software", CATALOG.software));
-    $("addModuleRow").addEventListener("click", ()=> addDefaultRow("modules", CATALOG.modules));
-    $("addTerminalRow").addEventListener("click", ()=> addDefaultRow("terminals", CATALOG.terminals));
-    $("addAccessoryRow").addEventListener("click", ()=> addDefaultRow("accessories", CATALOG.accessories));
-    $("addTechRow").addEventListener("click", ()=> addDefaultRow("tech", CATALOG.tech));
-    $("addSupportRow").addEventListener("click", ()=> addDefaultRow("support", CATALOG.support));
-    $("addRentingRow").addEventListener("click", addRentingRow);
-
-    function sectionToPDF(title, rows, options={}){
-      const { columns } = options;
-      if (!rows || rows.length === 0) return "";
-      const thead = columns.map(c => `<th>${c}</th>`).join("");
-      const tbody = rows.map(r => `<tr>${r.map(cell=> `<td>${cell}</td>`).join("")}</tr>`).join("");
-      return `
-        <div class="pdf-section-title">${title}</div>
-        <table class="pdf-table">
-          <thead><tr>${thead}</tr></thead>
-          <tbody>${tbody}</tbody>
-        </table>
-      `;
-    }
-
-    function buildPDFHtml(){
-      const Url = "https://ik.imagekit.io/fsobpyaa5i/capa_smart.png?updatedAt=1769508815425";
-      const footerUrl = "https://ik.imagekit.io/fsobpyaa5i/Group%2030469%20(3).png";
-      const logoUrl = "https://ik.imagekit.io/fsobpyaa5i/Ativo%208%20(2).png";
-
-      const projectName = $("projectName").value.trim() || "Proposta Comercial";
-      const refCode = $("refCode").value.trim() || "";
-      const clientName = $("clientName").value.trim() || "";
-      const validity = $("validity").value.trim() || "";
-      const salesName = $("salesName").value.trim() || "";
-      const salesRole = $("salesRole").value.trim() || "";
-      const salesEmail = $("salesEmail").value.trim() || "";
-      const notes = $("notes").value.trim() || "";
-      const genDate = new Date().toLocaleDateString("pt-PT");
-
-      recalcTotals();
-      const annual = $("annualTotal").textContent;
-      const monthly = $("monthlyTotal").textContent;
-      const oneoff = $("oneoffTotal").textContent;
-      const grand = $("grandTotal").textContent;
-
-      const softwareRows = state.software.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        const kind = r.kind === "anual" ? "Anual" : (r.kind === "mensal" ? "Mensal" : "One-off");
-        return [
-          `<b>${escapeHtml(r.label)}</b>`,
-          `${escapeHtml(String(r.qty || 0))}`,
-          `${eur(r.unit)}`,
-          `${kind}`,
-          `<b>${eur(line)}</b>`
-        ];
+    if ($("toggleRenting").checked){
+      state.renting.forEach(r=>{
+        const line = rentingLineTotal(r);
+        if(r.kind === "mensal") monthly += line;
+        else if(r.kind === "anual") annual += line;
+        else oneoff += line;
       });
-
-      const moduleRows = state.modules.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        const model = r.model === "anual" ? "Anual" : "One-off";
-        return [
-          `<b>${escapeHtml(r.label)}</b>`,
-          `${escapeHtml(String(r.qty || 0))}`,
-          `${eur(r.unit)}`,
-          `${model}`,
-          `<b>${eur(line)}</b>`
-        ];
-      });
-
-      const terminalRows = state.terminals.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        return [
-          `<b>${escapeHtml(r.label)}</b><div style="font-size:10px;color:#5a6c87;font-weight:700;margin-top:2px">${escapeHtml(r.cat||"")}</div>`,
-          `${escapeHtml(String(r.qty || 0))}`,
-          `${eur(r.unit)}`,
-          `<b>${eur(line)}</b>`
-        ];
-      });
-
-      const accessoryRows = state.accessories.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        const kind = r.kind === "anual" ? "Anual" : "One-off";
-        return [
-          `<b>${escapeHtml(r.label)}</b>`,
-          `${escapeHtml(String(r.qty || 0))}`,
-          `${eur(r.unit)}`,
-          `${kind}`,
-          `<b>${eur(line)}</b>`
-        ];
-      });
-
-      const rentingRows = (() => {
-        if (!$("toggleRenting").checked) return [];
-        const rows = state.renting
-          .map(r => {
-            const total = rentingLineTotal(r);
-            if(total <= 0) return null;
-            const tipo = r.kind === "mensal" ? "Mensal" : (r.kind === "anual" ? "Anual" : "One-off");
-            return [
-              `<b>${escapeHtml(r.label)}</b>`,
-              `${tipo}`,
-              `<b>${eur(total)}</b>`
-            ];
-          })
-          .filter(Boolean);
-        return rows;
-      })();
-
-      const techRows = state.tech.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        const hours = (num(r.hours) > 0) ? `${num(r.hours)}h` : "Sob consulta";
-        return [
-          `<b>${escapeHtml(r.label)}</b>`,
-          `${hours}`,
-          `${escapeHtml(String(r.qty || 0))}`,
-          `${eur(r.unit)}`,
-          `<b>${eur(line)}</b>`
-        ];
-      });
-
-      const supportRows = state.support.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        return [
-          `<b>${escapeHtml(r.label)}</b>`,
-          `${escapeHtml(r.includes || "")}`,
-          `${escapeHtml(String(r.qty || 0))}`,
-          `${eur(r.unit)}`,
-          `<b>${eur(line)}</b>`
-        ];
-      });
-
-      const showSoftware = $("toggleSoftware").checked && softwareRows.length;
-      const showModules = $("toggleModules").checked && moduleRows.length;
-      const showTerminals = $("toggleTerminals").checked && terminalRows.length;
-      const showAccessories = $("toggleAccessories").checked && accessoryRows.length;
-      const showRenting = $("toggleRenting").checked && rentingRows.length;
-      const showTech = $("toggleTechAdvisory").checked && techRows.length;
-      const showSupport = $("toggleSupport").checked && supportRows.length;
-
-      return `
-        <div class="pdf-">
-          <img src="${escapeAttr(Url)}" alt="Capa">
-        </div>
-
-        <div class="pdf-flow">
-          <div class="pdf-header">
-            <div class="meta">
-              <h2>Proposta Comercial</h2>
-              <p style="margin-top:4px">Documento gerado em <b>${escapeHtml(genDate)}</b></p>
-            </div>
-            <img class="logo" src="${escapeAttr(logoUrl)}" alt="2smart">
-          </div>
-
-          <div class="pdf-meta">
-            <div class="pdf-meta-grid">
-              <div class="pdf-meta-item"><b>Cliente</b>${clientName ? `<span><b style="all:unset;font-weight:800;color:#0d1b2a">${escapeHtml(clientName)}</b></span>` : "—"}</div>
-              <div class="pdf-meta-item"><b>Projeto</b>${projectName ? `<span><b style="all:unset;font-weight:800;color:#0d1b2a">${escapeHtml(projectName)}</b></span>` : "—"}</div>
-              <div class="pdf-meta-item"><b>Referência</b>${refCode ? escapeHtml(refCode) : "—"}</div>
-              <div class="pdf-meta-item"><b>Validade</b>${validity ? escapeHtml(validity) : "—"}</div>
-              <div class="pdf-meta-item"><b>Comercial</b>${salesName ? escapeHtml(salesName) : "—"}${salesRole ? ` <span style="color:#5a6c87;font-weight:700">(${escapeHtml(salesRole)})</span>` : ""}</div>
-              <div class="pdf-meta-item"><b>Email</b>${salesEmail ? escapeHtml(salesEmail) : "—"}</div>
-            </div>
-          </div>
-
-          <div class="pdf-block">
-            ${showSoftware ? sectionToPDF("Software", softwareRows, { columns: ["Item","Qtd.","Valor unitário","Tipo","Total"] }) : ""}
-            ${showModules ? sectionToPDF("Módulos", moduleRows, { columns: ["Módulo","Qtd.","Valor unitário","Modelo","Total"] }) : ""}
-            ${showTerminals ? sectionToPDF("Terminais", terminalRows, { columns: ["Item","Qtd.","Valor unitário","Total"] }) : ""}
-            ${showAccessories ? sectionToPDF("Acessórios / Serviços", accessoryRows, { columns: ["Item","Qtd.","Valor unitário","Tipo","Total"] }) : ""}
-            ${showRenting ? sectionToPDF("Renting  (Instalação, Implementação, e formação remota)", rentingRows, { columns: ["Serviço","Tipo","Total"] }) : ""}
-            ${showTech ? sectionToPDF("Assessoria Técnica", techRows, { columns: ["Pacote","Horas","Qtd.","Valor unitário","Total"] }) : ""}
-            ${showSupport ? sectionToPDF("Suporte Técnico", supportRows, { columns: ["Pack","Inclui","Qtd.","Valor unitário","Total"] }) : ""}
-
-            ${notes ? `
-              <div class="pdf-section-title">Observações</div>
-              <div style="border:1px solid #e8eef7;border-radius:12px;padding:12px;font-size:11px;line-height:1.6;color:#30425e;font-weight:500;background:#fbfdff;">
-                ${escapeHtml(notes).replace(/\n/g, "<br>")}
-              </div>
-            ` : ""}
-          </div>
-
-          <div class="pdf-totals">
-            <div class="pdf-chip">Total proposta: <span>${escapeHtml(grand)}</span></div>
-            <div class="pdf-chip">Subscrição anual: <span>${escapeHtml(annual)}</span></div>
-            <div class="pdf-chip">Subscrição mensal: <span>${escapeHtml(monthly)}</span></div>
-            <div class="pdf-chip">One-off: <span>${escapeHtml(oneoff)}</span></div>
-          </div>
-
-          <div style="height:24px"></div>
-        </div>
-
-        <div class="pdf-footer">
-          <img src="${escapeAttr(footerUrl)}" alt="Rodapé">
-        </div>
-      `;
     }
 
-    function escapeHtml(str){
-      return String(str || "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+    const grand = annual + monthly + oneoff;
+
+    $("annualTotal").textContent = eur(annual);
+    $("monthlyTotal").textContent = eur(monthly);
+    $("oneoffTotal").textContent = eur(oneoff);
+    $("grandTotal").textContent = eur(grand);
+  }
+
+  function addDefaultRow(section, catalog, label){
+    const found = catalog.find(x=>x.label===label) || catalog[0];
+    if (!found) return;
+
+    if (section === "software"){
+      addRow("software", { id: uid(), label: found.label, qty: 1, unit: found.price, kind: (found.type?.startsWith("anual") ? "anual" : (found.type?.startsWith("mensal") ? "mensal" : "oneoff")) });
+    } else if (section === "modules"){
+      addRow("modules", { id: uid(), label: found.label, qty: 1, unit: found.price, model: "oneoff" });
+    } else if (section === "terminals"){
+      addRow("terminals", { id: uid(), label: found.label, qty: 1, unit: found.price, cat: found.cat });
+    } else if (section === "accessories"){
+      addRow("accessories", { id: uid(), label: found.label, qty: 1, unit: found.price, kind: "oneoff" });
+    } else if (section === "tech"){
+      addRow("tech", { id: uid(), label: found.label, hours: found.hours, qty: 1, unit: found.price });
+    } else if (section === "support"){
+      addRow("support", { id: uid(), label: found.label, includes: found.includes, qty: 1, unit: found.price });
     }
-    function escapeAttr(str){ return escapeHtml(str).replaceAll("\n",""); }
+  }
 
-    async function ensureImagesLoaded(root){
-      const imgs = Array.from(root.querySelectorAll("img"));
-      await Promise.all(imgs.map(img => {
-        if (img.complete && img.naturalWidth) return Promise.resolve();
-        return new Promise((res) => {
-          img.onload = () => res();
-          img.onerror = () => res();
-        });
-      }));
-    }
+  function addRentingRow(){
+    const found = CATALOG.renting[0];
+    addRow("renting", { id: uid(), label: found.label, unit: found.price, collabs: 0, kind: "anual" });
+  }
 
-    async function renderPdfRoot(){
-      const root = $("pdfRoot");
-      root.innerHTML = buildPDFHtml();
-      await ensureImagesLoaded(root);
-      return root;
-    }
+  $("addSoftwareRow").addEventListener("click", ()=> addDefaultRow("software", CATALOG.software));
+  $("addModuleRow").addEventListener("click", ()=> addDefaultRow("modules", CATALOG.modules));
+  $("addTerminalRow").addEventListener("click", ()=> addDefaultRow("terminals", CATALOG.terminals));
+  $("addAccessoryRow").addEventListener("click", ()=> addDefaultRow("accessories", CATALOG.accessories));
+  $("addTechRow").addEventListener("click", ()=> addDefaultRow("tech", CATALOG.tech));
+  $("addSupportRow").addEventListener("click", ()=> addDefaultRow("support", CATALOG.support));
+  $("addRentingRow").addEventListener("click", addRentingRow);
 
-    $("previewBtn").addEventListener("click", async ()=>{
-      const root = await renderPdfRoot();
-      $("previewArea").innerHTML = root.innerHTML;
-      const modal = new bootstrap.Modal(document.getElementById("previewModal"));
-      modal.show();
-    });
+  function sectionToPDF(title, rows, options={}){
+    const { columns } = options;
+    if (!rows || rows.length === 0) return "";
+    const thead = columns.map(c => `<th>${c}</th>`).join("");
+    const tbody = rows.map(r => `<tr>${r.map(cell=> `<td>${cell}</td>`).join("")}</tr>`).join("");
+    return `
+      <div class="pdf-section-title">${title}</div>
+      <table class="pdf-table">
+        <thead><tr>${thead}</tr></thead>
+        <tbody>${tbody}</tbody>
+      </table>
+    `;
+  }
 
-    async function exportPdfWithMode(qMode){
-      const loader = $("loader");
-      loader.classList.add("show");
+  function buildPDFHtml(){
+    const Url = "https://ik.imagekit.io/fsobpyaa5i/capa_smart.png?updatedAt=1769508815425";
+    const footerUrl = "https://ik.imagekit.io/fsobpyaa5i/Group%2030469%20(3).png";
+    const logoUrl = "https://ik.imagekit.io/fsobpyaa5i/Ativo%208%20(2).png";
 
-      try{
-        window.scrollTo(0,0);
+    const projectName = $("projectName").value.trim() || "Proposta Comercial";
+    const refCode = $("refCode").value.trim() || "";
+    const clientName = $("clientName").value.trim() || "";
+    const validity = $("validity").value.trim() || "";
+    const salesName = $("salesName").value.trim() || "";
+    const salesRole = $("salesRole").value.trim() || "";
+    const salesEmail = $("salesEmail").value.trim() || "";
+    const notes = $("notes").value.trim() || "";
+    const genDate = new Date().toLocaleDateString("pt-PT");
 
-        const root = await renderPdfRoot();
-        const host = PDF.ensureHost();
-
-        const originalParent = root.parentElement;
-        const originalNext = root.nextElementSibling;
-        host.appendChild(root);
-
-        root.style.width = "794px";
-        root.style.margin = "0";
-        root.style.padding = "0";
-        root.style.transform = "none";
-        root.style.position = "relative";
-        root.style.left = "0";
-        root.style.top = "0";
-
-        await PDF.inlineImages(root);
-        await PDF.waitImages(root);
-        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-
-        const refCode = ($("refCode").value.trim() || "sem-codigo");
-        const filename = `2Smart HR - proposta comercial - ${sanitizeFile(refCode)}.pdf`;
-
-        const SCALE = (qMode === "light") ? 1.35 : (qMode === "balanced" ? 2.1 : 3.0);
-        const JPEG_Q = (qMode === "light") ? 0.72 : (qMode === "balanced" ? 0.86 : 0.995);
-        const FOOT_Q = (qMode === "light") ? 0.72 : (qMode === "balanced" ? 0.86 : 0.98);
-
-        const footerEl = root.querySelector(".pdf-footer");
-        let footerNext = null;
-        let footerParent = null;
-        if(footerEl){
-          footerParent = footerEl.parentNode;
-          footerNext = footerEl.nextSibling;
-          footerEl.remove();
-        }
-
-        host.style.height = "auto";
-        host.style.overflow = "visible";
-        root.style.height = "auto";
-        root.style.overflow = "visible";
-
-        const dynamicWinH = Math.max(1123, Math.ceil(root.scrollHeight || 0));
-
-        const opt = {
-          margin: [0,0,0,0],
-          filename,
-          image: { type: "jpeg", quality: JPEG_Q },
-          html2canvas: {
-            scale: SCALE,
-            useCORS: true,
-            allowTaint: false,
-            backgroundColor: "#ffffff",
-            windowWidth: 794,
-            windowHeight: dynamicWinH,
-            scrollX: 0,
-            scrollY: 0,
-            x: 0,
-            y: 0
-          },
-          jsPDF: { unit: "px", format: [794,1123], orientation: "portrait" },
-          pagebreak: { mode: ["css"] }
-        };
-
-        const worker = html2pdf().set(opt).from(root).toPdf();
-        const pdf = await worker.get("pdf");
-
-        if(footerEl && footerParent){
-          if(footerNext) footerParent.insertBefore(footerEl, footerNext);
-          else footerParent.appendChild(footerEl);
-        }
-
-        if(footerEl){
-          await PDF.inlineImages(footerEl);
-          await PDF.waitImages(footerEl);
-
-          const canvas = await html2canvas(footerEl, opt.html2canvas);
-          const imgData = canvas.toDataURL("image/jpeg", FOOT_Q);
-          pdf.addPage([794,1123], "portrait");
-          pdf.addImage(imgData, "JPEG", 0, 0, 794, 1123);
-        }
-
-        pdf.save(filename);
-
-        if(originalParent){
-          if(originalNext) originalParent.insertBefore(root, originalNext);
-          else originalParent.appendChild(root);
-        }
-      } catch(err){
-        console.error(err);
-        alert("Não foi possível gerar o PDF !");
-      } finally{
-        loader.classList.remove("show");
-      }
-    }
-
-    function bindPdfDownloadModal(){
-      const btnExport = document.getElementById("exportBtn");
-      const btnO = document.getElementById("dlPdfOriginal");
-      const btnB = document.getElementById("dlPdfBalanced");
-      const btnL = document.getElementById("dlPdfLight");
-      const modalEl = document.getElementById("downloadPdfModal");
-
-      if(btnExport && modalEl){
-        btnExport.addEventListener("click", ()=>{
-          const modal = new bootstrap.Modal(modalEl);
-          modal.show();
-        });
-      }
-
-      if(btnO){
-        btnO.addEventListener("click", ()=>{
-          bootstrap.Modal.getInstance(modalEl)?.hide();
-          exportPdfWithMode("original");
-        });
-      }
-      if(btnB){
-        btnB.addEventListener("click", ()=>{
-          bootstrap.Modal.getInstance(modalEl)?.hide();
-          exportPdfWithMode("balanced");
-        });
-      }
-      if(btnL){
-        btnL.addEventListener("click", ()=>{
-          bootstrap.Modal.getInstance(modalEl)?.hide();
-          exportPdfWithMode("light");
-        });
-      }
-    }
-
-    function sanitizeFile(s){
-      return String(s || "Proposta")
-        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^\w\-]+/g, "_")
-        .replace(/_+/g, "_")
-        .replace(/^_+|_+$/g, "");
-    }
-
-    if(document.readyState === "loading"){
-      document.addEventListener("DOMContentLoaded", bindPdfDownloadModal);
-    } else {
-      bindPdfDownloadModal();
-    }
-
-    addRow("software", { id: uid(), label: "2smart HR Cloud — Licença (1º Ano)", qty: 50, unit: 6.60, kind: "mensal" });
-    $("refCode").value = "";
-
-    render();
     recalcTotals();
-  </script>
+    const annual = $("annualTotal").textContent;
+    const monthly = $("monthlyTotal").textContent;
+    const oneoff = $("oneoffTotal").textContent;
+    const grand = $("grandTotal").textContent;
+
+    const softwareRows = $("toggleSoftware").checked ? state.software.map(r=>{
+      const line = num(r.qty) * num(r.unit);
+      const kind = r.kind === "anual" ? "Anual" : (r.kind === "mensal" ? "Mensal" : "One-off");
+      return [
+        `<b>${escapeHtml(r.label)}</b>`,
+        `${escapeHtml(String(r.qty || 0))}`,
+        `${eur(r.unit)}`,
+        `${kind}`,
+        `<b>${eur(line)}</b>`
+      ];
+    }) : [];
+
+    const moduleRows = $("toggleModules").checked ? state.modules.map(r=>{
+      const line = num(r.qty) * num(r.unit);
+      const model = r.model === "anual" ? "Anual" : "One-off";
+      return [
+        `<b>${escapeHtml(r.label)}</b>`,
+        `${escapeHtml(String(r.qty || 0))}`,
+        `${eur(r.unit)}`,
+        `${model}`,
+        `<b>${eur(line)}</b>`
+      ];
+    }) : [];
+
+    const terminalRows = $("toggleTerminals").checked ? state.terminals.map(r=>{
+      const line = num(r.qty) * num(r.unit);
+      return [
+        `<b>${escapeHtml(r.label)}</b><div style="font-size:10px;color:#5a6c87;font-weight:700;margin-top:2px">${escapeHtml(r.cat||"")}</div>`,
+        `${escapeHtml(String(r.qty || 0))}`,
+        `${eur(r.unit)}`,
+        `<b>${eur(line)}</b>`
+      ];
+    }) : [];
+
+    const accessoryRows = $("toggleAccessories").checked ? state.accessories.map(r=>{
+      const line = num(r.qty) * num(r.unit);
+      const kind = r.kind === "anual" ? "Anual" : "One-off";
+      return [
+        `<b>${escapeHtml(r.label)}</b>`,
+        `${escapeHtml(String(r.qty || 0))}`,
+        `${eur(r.unit)}`,
+        `${kind}`,
+        `<b>${eur(line)}</b>`
+      ];
+    }) : [];
+
+    const rentingRows = (() => {
+      if (!$("toggleRenting").checked) return [];
+      const rows = state.renting
+        .map(r => {
+          const total = rentingLineTotal(r);
+          if(total <= 0) return null;
+          const tipo = r.kind === "mensal" ? "Mensal" : (r.kind === "anual" ? "Anual" : "One-off");
+          return [
+            `<b>${escapeHtml(r.label)}</b>`,
+            `${tipo}`,
+            `<b>${eur(total)}</b>`
+          ];
+        })
+        .filter(Boolean);
+      return rows;
+    })();
+
+    const techRows = $("toggleTechAdvisory").checked ? state.tech.map(r=>{
+      const line = num(r.qty) * num(r.unit);
+      const hours = (num(r.hours) > 0) ? `${num(r.hours)}h` : "Sob consulta";
+      return [
+        `<b>${escapeHtml(r.label)}</b>`,
+        `${hours}`,
+        `${escapeHtml(String(r.qty || 0))}`,
+        `${eur(r.unit)}`,
+        `<b>${eur(line)}</b>`
+      ];
+    }) : [];
+
+    const supportRows = $("toggleSupport").checked ? state.support.map(r=>{
+      const line = num(r.qty) * num(r.unit);
+      return [
+        `<b>${escapeHtml(r.label)}</b>`,
+        `${escapeHtml(r.includes || "")}`,
+        `${escapeHtml(String(r.qty || 0))}`,
+        `${eur(r.unit)}`,
+        `<b>${eur(line)}</b>`
+      ];
+    }) : [];
+
+    const showSoftware = $("toggleSoftware").checked && softwareRows.length;
+    const showModules = $("toggleModules").checked && moduleRows.length;
+    const showTerminals = $("toggleTerminals").checked && terminalRows.length;
+    const showAccessories = $("toggleAccessories").checked && accessoryRows.length;
+    const showRenting = $("toggleRenting").checked && rentingRows.length;
+    const showTech = $("toggleTechAdvisory").checked && techRows.length;
+    const showSupport = $("toggleSupport").checked && supportRows.length;
+
+    return `
+      <div class="pdf-">
+        <img src="${escapeAttr(Url)}" alt="Capa">
+      </div>
+
+      <div class="pdf-flow">
+        <div class="pdf-header">
+          <div class="meta">
+            <h2>Proposta Comercial</h2>
+            <p style="margin-top:4px">Documento gerado em <b>${escapeHtml(genDate)}</b></p>
+          </div>
+          <img class="logo" src="${escapeAttr(logoUrl)}" alt="2smart">
+        </div>
+
+        <div class="pdf-meta">
+          <div class="pdf-meta-grid">
+            <div class="pdf-meta-item"><b>Cliente</b>${clientName ? `<span><b style="all:unset;font-weight:800;color:#0d1b2a">${escapeHtml(clientName)}</b></span>` : "—"}</div>
+            <div class="pdf-meta-item"><b>Projeto</b>${projectName ? `<span><b style="all:unset;font-weight:800;color:#0d1b2a">${escapeHtml(projectName)}</b></span>` : "—"}</div>
+            <div class="pdf-meta-item"><b>Referência</b>${refCode ? escapeHtml(refCode) : "—"}</div>
+            <div class="pdf-meta-item"><b>Validade</b>${validity ? escapeHtml(validity) : "—"}</div>
+            <div class="pdf-meta-item"><b>Comercial</b>${salesName ? escapeHtml(salesName) : "—"}${salesRole ? ` <span style="color:#5a6c87;font-weight:700">(${escapeHtml(salesRole)})</span>` : ""}</div>
+            <div class="pdf-meta-item"><b>Email</b>${salesEmail ? escapeHtml(salesEmail) : "—"}</div>
+          </div>
+        </div>
+
+        <div class="pdf-block">
+          ${showSoftware ? sectionToPDF("Software", softwareRows, { columns: ["Item","Qtd.","Valor unitário","Tipo","Total"] }) : ""}
+          ${showModules ? sectionToPDF("Módulos", moduleRows, { columns: ["Módulo","Qtd.","Valor unitário","Modelo","Total"] }) : ""}
+          ${showTerminals ? sectionToPDF("Terminais", terminalRows, { columns: ["Item","Qtd.","Valor unitário","Total"] }) : ""}
+          ${showAccessories ? sectionToPDF("Acessórios / Serviços", accessoryRows, { columns: ["Item","Qtd.","Valor unitário","Tipo","Total"] }) : ""}
+          ${showRenting ? sectionToPDF("Renting  (Instalação, Implementação, e formação remota)", rentingRows, { columns: ["Serviço","Tipo","Total"] }) : ""}
+          ${showTech ? sectionToPDF("Assessoria Técnica", techRows, { columns: ["Pacote","Horas","Qtd.","Valor unitário","Total"] }) : ""}
+          ${showSupport ? sectionToPDF("Suporte Técnico", supportRows, { columns: ["Pack","Inclui","Qtd.","Valor unitário","Total"] }) : ""}
+
+          ${notes ? `
+            <div class="pdf-section-title">Observações</div>
+            <div style="border:1px solid #e8eef7;border-radius:12px;padding:12px;font-size:11px;line-height:1.6;color:#30425e;font-weight:500;background:#fbfdff;">
+              ${escapeHtml(notes).replace(/\n/g, "<br>")}
+            </div>
+          ` : ""}
+        </div>
+
+        <div class="pdf-totals">
+          <div class="pdf-chip">Total proposta: <span>${escapeHtml(grand)}</span></div>
+          <div class="pdf-chip">Subscrição anual: <span>${escapeHtml(annual)}</span></div>
+          <div class="pdf-chip">Subscrição mensal: <span>${escapeHtml(monthly)}</span></div>
+          <div class="pdf-chip">One-off: <span>${escapeHtml(oneoff)}</span></div>
+        </div>
+
+        <div style="height:24px"></div>
+      </div>
+
+      <div class="pdf-footer">
+        <img src="${escapeAttr(footerUrl)}" alt="Rodapé">
+      </div>
+    `;
+  }
+
+  function escapeHtml(str){
+    return String(str || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+  function escapeAttr(str){ return escapeHtml(str).replaceAll("\n",""); }
+
+  async function ensureImagesLoaded(root){
+    const imgs = Array.from(root.querySelectorAll("img"));
+    await Promise.all(imgs.map(img => {
+      if (img.complete && img.naturalWidth) return Promise.resolve();
+      return new Promise((res) => {
+        img.onload = () => res();
+        img.onerror = () => res();
+      });
+    }));
+  }
+
+  async function renderPdfRoot(){
+    const root = $("pdfRoot");
+    root.innerHTML = buildPDFHtml();
+    await ensureImagesLoaded(root);
+    return root;
+  }
+
+  $("previewBtn").addEventListener("click", async ()=>{
+    const root = await renderPdfRoot();
+    $("previewArea").innerHTML = root.innerHTML;
+    const modal = new bootstrap.Modal(document.getElementById("previewModal"));
+    modal.show();
+  });
+
+  async function exportPdfWithMode(qMode){
+    const loader = $("loader");
+    loader.classList.add("show");
+
+    try{
+      window.scrollTo(0,0);
+
+      const root = await renderPdfRoot();
+      const host = PDF.ensureHost();
+
+      const originalParent = root.parentElement;
+      const originalNext = root.nextElementSibling;
+      host.appendChild(root);
+
+      root.style.width = "794px";
+      root.style.margin = "0";
+      root.style.padding = "0";
+      root.style.transform = "none";
+      root.style.position = "relative";
+      root.style.left = "0";
+      root.style.top = "0";
+
+      await PDF.inlineImages(root);
+      await PDF.waitImages(root);
+      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+      const refCode = ($("refCode").value.trim() || "sem-codigo");
+      const filename = `2Smart HR - proposta comercial - ${sanitizeFile(refCode)}.pdf`;
+
+      const SCALE = (qMode === "light") ? 1.35 : (qMode === "balanced" ? 2.1 : 3.0);
+      const JPEG_Q = (qMode === "light") ? 0.72 : (qMode === "balanced" ? 0.86 : 0.995);
+      const FOOT_Q = (qMode === "light") ? 0.72 : (qMode === "balanced" ? 0.86 : 0.98);
+
+      const footerEl = root.querySelector(".pdf-footer");
+      let footerNext = null;
+      let footerParent = null;
+      if(footerEl){
+        footerParent = footerEl.parentNode;
+        footerNext = footerEl.nextSibling;
+        footerEl.remove();
+      }
+
+      host.style.height = "auto";
+      host.style.overflow = "visible";
+      root.style.height = "auto";
+      root.style.overflow = "visible";
+
+      const dynamicWinH = Math.max(1123, Math.ceil(root.scrollHeight || 0));
+
+      const opt = {
+        margin: [0,0,0,0],
+        filename,
+        image: { type: "jpeg", quality: JPEG_Q },
+        html2canvas: {
+          scale: SCALE,
+          useCORS: true,
+          allowTaint: false,
+          backgroundColor: "#ffffff",
+          windowWidth: 794,
+          windowHeight: dynamicWinH,
+          scrollX: 0,
+          scrollY: 0,
+          x: 0,
+          y: 0
+        },
+        jsPDF: { unit: "px", format: [794,1123], orientation: "portrait" },
+        pagebreak: { mode: ["css"] }
+      };
+
+      const worker = html2pdf().set(opt).from(root).toPdf();
+      const pdf = await worker.get("pdf");
+
+      if(footerEl && footerParent){
+        if(footerNext) footerParent.insertBefore(footerEl, footerNext);
+        else footerParent.appendChild(footerEl);
+      }
+
+      if(footerEl){
+        await PDF.inlineImages(footerEl);
+        await PDF.waitImages(footerEl);
+
+        const canvas = await html2canvas(footerEl, opt.html2canvas);
+        const imgData = canvas.toDataURL("image/jpeg", FOOT_Q);
+        pdf.addPage([794,1123], "portrait");
+        pdf.addImage(imgData, "JPEG", 0, 0, 794, 1123);
+      }
+
+      pdf.save(filename);
+
+      if(originalParent){
+        if(originalNext) originalParent.insertBefore(root, originalNext);
+        else originalParent.appendChild(root);
+      }
+    } catch(err){
+      console.error(err);
+      alert("Não foi possível gerar o PDF !");
+    } finally{
+      loader.classList.remove("show");
+    }
+  }
+
+  function bindPdfDownloadModal(){
+    const btnExport = document.getElementById("exportBtn");
+    const btnO = document.getElementById("dlPdfOriginal");
+    const btnB = document.getElementById("dlPdfBalanced");
+    const btnL = document.getElementById("dlPdfLight");
+    const modalEl = document.getElementById("downloadPdfModal");
+
+    if(btnExport && modalEl){
+      btnExport.addEventListener("click", ()=>{
+        const modal = new bootstrap.Modal(modalEl);
+        modal.show();
+      });
+    }
+
+    if(btnO){
+      btnO.addEventListener("click", ()=>{
+        bootstrap.Modal.getInstance(modalEl)?.hide();
+        exportPdfWithMode("original");
+      });
+    }
+    if(btnB){
+      btnB.addEventListener("click", ()=>{
+        bootstrap.Modal.getInstance(modalEl)?.hide();
+        exportPdfWithMode("balanced");
+      });
+    }
+    if(btnL){
+      btnL.addEventListener("click", ()=>{
+        bootstrap.Modal.getInstance(modalEl)?.hide();
+        exportPdfWithMode("light");
+      });
+    }
+  }
+
+  function sanitizeFile(s){
+    return String(s || "Proposta")
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\w\-]+/g, "_")
+      .replace(/_+/g, "_")
+      .replace(/^_+|_+$/g, "");
+  }
+
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", bindPdfDownloadModal);
+  } else {
+    bindPdfDownloadModal();
+  }
+
+  addRow("software", { id: uid(), label: "2smart HR Cloud — Licença (1º Ano)", qty: 50, unit: 6.60, kind: "mensal" });
+  $("refCode").value = "";
+
+  render();
+  recalcTotals();
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
