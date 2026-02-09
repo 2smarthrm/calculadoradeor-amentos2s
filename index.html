@@ -1,28 +1,17 @@
-<!---
- 
--->
 <!doctype html>
 <html lang="pt-PT">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>2smart | Calculadora de orçamentos</title>
-
-  <!-- Montserrat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Fav Icon -->
-    <link rel="icon" href="https://2smart.pt/assets/images//2Smart.png" type="image/x-icon">
-  <!-- Bootstrap + Icons -->
+  <link rel="icon" href="https://2smart.pt/assets/images//2Smart.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-
-  <!-- html2pdf (html2canvas + jsPDF) -->
-  
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
 
   <style>
     :root{
@@ -36,29 +25,21 @@
       --line:#e9eef6;
       --soft:#f6f8fc;
     }
-
     *{ box-sizing:border-box; }
- body {
-  font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  color: #0b1220;
-
-  background:
-    radial-gradient(900px 600px at 15% 20%, rgba(0, 102, 255, 0.45), transparent 60%),
-    radial-gradient(800px 500px at 85% 25%, rgba(120, 170, 255, 0.45), transparent 55%),
-    radial-gradient(1000px 700px at 50% 90%, rgba(10, 40, 120, 0.55), transparent 65%),
-    linear-gradient(180deg, #eaf1ff 0%, #cddcff 40%, #4b78ff 100%);
-
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-    .shell{
-      padding: 28px 0 50px;
+    body{
+      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #0b1220;
+      background:
+        radial-gradient(900px 600px at 15% 20%, rgba(0, 102, 255, 0.45), transparent 60%),
+        radial-gradient(800px 500px at 85% 25%, rgba(120, 170, 255, 0.45), transparent 55%),
+        radial-gradient(1000px 700px at 50% 90%, rgba(10, 40, 120, 0.55), transparent 65%),
+        linear-gradient(180deg, #eaf1ff 0%, #cddcff 40%, #4b78ff 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
+    .shell{ padding: 28px 0 50px; }
     .app-card{
       background: rgba(255,255,255,.90);
       border: 1px solid rgba(255,255,255,.25);
@@ -67,7 +48,6 @@
       overflow: hidden;
       backdrop-filter: blur(10px);
     }
-
     .topbar{
       display:flex;
       align-items:center;
@@ -77,43 +57,17 @@
       background: linear-gradient(90deg, rgba(11,92,255,.10), rgba(122,167,255,.12));
       border-bottom: 1px solid rgba(13,27,42,.08);
     }
-
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
-    .brand img{
-      height: 28px; width:auto;
-    }
-    .brand .title{
-      line-height: 1.1;
-    }
-    .brand .title b{
-      display:block; font-size: 14px;
-    }
-    .brand .title span{
-      display:block; font-size: 12px; color: var(--muted);
-    }
-
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      background: rgba(11,92,255,.10);
-      border: 1px solid rgba(11,92,255,.18);
-      color: #0b2e7a;
-      font-weight: 600;
-      font-size: 12px;
-      white-space: nowrap;
-    }
+    .brand{ display:flex; align-items:center; gap:12px; }
+    .brand img{ height: 28px; width:auto; }
+    .brand .title{ line-height: 1.1; }
+    .brand .title b{ display:block; font-size: 14px; }
 
     .grid{
-      display:flex; 
+      display:flex;
       justify-content: center;
       align-items: center;
       height:100%;
-      width:100%; 
+      width:100%;
       gap: 16px;
       padding: 18px 22px 22px;
     }
@@ -142,7 +96,6 @@
       gap: 10px;
       margin: 10px 0 8px;
     }
-
     .section-head .left{
       display:flex; align-items:center; gap:10px;
       font-weight: 800;
@@ -159,9 +112,7 @@
       background: rgba(11,92,255,.06);
     }
 
-    .mini-actions{
-      display:flex; gap: 8px; flex-wrap: wrap;
-    }
+    .mini-actions{ display:flex; gap: 8px; flex-wrap: wrap; }
 
     .soft{
       background: var(--soft);
@@ -169,13 +120,11 @@
       border-radius: 14px;
       padding: 12px;
     }
-
     .form-label{
       font-size: 12px;
       font-weight: 700;
       color: #294a86;
     }
-
     .table-lite{
       width:100%;
       border-collapse: separate;
@@ -184,7 +133,6 @@
       border-radius: 14px;
       border: 1px solid rgba(13,27,42,.08);
     }
-
     .table-lite th, .table-lite td{
       padding: 10px 10px;
       border-bottom: 1px solid rgba(13,27,42,.06);
@@ -267,46 +215,11 @@
     }
     @keyframes spin{ to{ transform: rotate(360deg);} }
 
-    /* PDF area (hidden) */
     #pdfRoot{
-      width: 794px; /* ~A4 @ 96dpi */
+      width: 794px;
       background:#fff;
       color:#0d1b2a;
       font-family:"Montserrat", Arial, sans-serif;
-    }
-        .pdf-page{
-      width: 794px; /* ~A4 @ 96dpi */
-      background:#fff;
-    }
-    /* Full-bleed pages (capa e última página) */
-    .pdf-bleed{
-      width: 794px;
-      height: 1123px;
-      position: relative;
-      page-break-after: always;
-      overflow: hidden;
-      background:#fff;
-    }
-    .pdf-bleed img{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit: ;
-      display:block;
-    }
-
-    /* Content flow (pode paginar automaticamente) */
-    .pdf-flow{
-      width: 794px;
-      background:#fff;
-      page-break-after: auto;
-    }
-
-    @page { margin: 0; }
-    #pdfRoot, #pdfRoot *{
-      -webkit-print-color-adjust: exact;
-      print-color-adjust: exact;
     }
 
     .pdf-meta{
@@ -353,12 +266,9 @@
       color:#51627c;
       font-weight: 600;
     }
-    .pdf-header .logo{
-      height: 34px;
-    }
-    .pdf-block{
-      padding: 0 36px 14px;
-    }
+    .pdf-header .logo{ height: 34px; }
+    .pdf-block{ padding: 0 36px 14px; }
+
     .pdf-section-title{
       display:flex;
       align-items:center;
@@ -391,14 +301,7 @@
     }
     .pdf-table tr:last-child td{ border-bottom:0; }
     .pdf-table td:last-child, .pdf-table th:last-child{ text-align:right; }
-    .pdf-table td:nth-child(2), .pdf-table th:nth-child(2){ text-align:center; width: 80px; }
-    .pdf-table td:nth-child(3), .pdf-table th:nth-child(3){ text-align:right; width: 140px; }
-    .pdf-note{
-      font-size: 10px;
-      color:#5a6c87;
-      margin-top: 8px;
-      font-weight: 600;
-    }
+
     .pdf-totals{
       display:flex;
       gap:10px;
@@ -417,43 +320,11 @@
       gap:8px;
       align-items:center;
     }
-    .pdf-chip span{
-      color:#0d1b2a;
-      font-weight: 900;
-    }
-    .pdf-footer{
-      position:absolute;
-      left:0; right:0;
-      bottom:0;
-    }
-    .pdf-footer-overlay{
-      position:absolute;
-      left:0; right:0;
-      bottom: 16px;
-      padding: 0 36px;
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-end;
-      pointer-events:none;
-      color:#ffffff;
-    }
-    .pdf-footer-overlay .who{
-      font-size: 12px;
-      font-weight: 800;
-      text-shadow: 0 2px 12px rgba(0,0,0,.25);
-    }
-    .pdf-footer-overlay .who small{
-      display:block;
-      font-size: 10px;
-      font-weight: 600;
-      opacity:.95;
-    }
-  
-    /* ===== PDF Export (A4, sem margens, sem páginas em branco) ===== */
+    .pdf-chip span{ color:#0d1b2a; font-weight: 900; }
+
     @page { margin: 0; }
     html, body { margin:0; padding:0; }
 
-    /* Host para captura: coordenadas POSITIVAS (evita "página na negativa") */
     #pdfRenderHost{
       position: fixed;
       left: -10000px;
@@ -466,16 +337,6 @@
       overflow: visible;
     }
 
-    #pdfRoot{
-      width: 794px;
-      margin: 0 !important;
-      padding: 0 !important;
-      background:#fff;
-      color:#0d1b2a;
-      font-family:"Montserrat", Arial, sans-serif;
-    }
-
-    /* Capa / Footer: 1 página inteira */
     .pdf-,
     .pdf-footer{
       width: 794px;
@@ -490,36 +351,22 @@
     }
     .pdf-{ height: 1122px; page-break-after: always; }
     .pdf-footer{ page-break-before: always; page-break-after: auto; }
-
     .pdf- img,
     .pdf-footer img{
       width: 100%;
       height: 100%;
       display:block;
-      object-fit: ; /* ocupa a folha inteira */
     }
 
-    /* Conteúdo: começa no topo e evita cortes estranhos */
     .pdf-flow{
       width: 794px;
       margin: 0 !important;
       padding: 0 !important;
       background:#fff;
     }
-    .pdf-header, .pdf-meta, .pdf-totals { break-inside: avoid; page-break-inside: avoid; }
-    .pdf-table tr{ break-inside: avoid; page-break-inside: avoid; }
-    .pdf-table th, .pdf-table td{
-      word-break: break-word;
-      overflow-wrap: anywhere;
-      hyphens: auto;
-    }
 
-    /* Preview modal mais estreito */
-    .modal-dialog.modal-preview-narrow{
-      max-width: 920px;
-    }
-
-</style>
+    .modal-dialog.modal-preview-narrow{ max-width: 920px; }
+  </style>
 </head>
 
 <body>
@@ -530,14 +377,12 @@
         <div class="brand">
           <img id="brandLogo" alt="2smart" src="https://ik.imagekit.io/fsobpyaa5i/Ativo%208%20(2).png">
           <div class="title">
-            <b>Calculadora de orçamentos</b> 
+            <b>Calculadora de orçamentos</b>
           </div>
         </div>
- 
       </div>
 
       <div class="grid col-lg-12">
-        <!-- LEFT: Form -->
         <div class="panel col-lg-12">
           <h5>Dados da Proposta</h5>
 
@@ -576,7 +421,6 @@
 
           <hr class="my-4">
 
-          <!-- Section toggles -->
           <div class="soft">
             <div class="d-flex flex-wrap gap-3 align-items-center">
               <div class="form-check form-switch">
@@ -596,6 +440,10 @@
                 <label class="form-check-label fw-bold" for="toggleAccessories">Acessórios / Serviços</label>
               </div>
               <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="toggleRenting">
+                <label class="form-check-label fw-bold" for="toggleRenting">Renting</label>
+              </div>
+              <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="toggleTechAdvisory">
                 <label class="form-check-label fw-bold" for="toggleTechAdvisory">Assessoria Técnica</label>
               </div>
@@ -606,7 +454,6 @@
             </div>
           </div>
 
-          <!-- SOFTWARE -->
           <div id="secSoftware" class="mt-3">
             <div class="section-head">
               <div class="left"><span class="badge-num">1</span>Software</div>
@@ -629,10 +476,9 @@
                 </thead>
                 <tbody id="softwareBody"></tbody>
               </table>
-            </div> 
+            </div>
           </div>
 
-          <!-- MODULES -->
           <div id="secModules" class="mt-4" style="display:none">
             <div class="section-head">
               <div class="left"><span class="badge-num">2</span>Módulos</div>
@@ -656,12 +502,8 @@
                 <tbody id="modulesBody"></tbody>
               </table>
             </div>
-            <div class="pdf-note mt-2">
-              “Modelo” define se o valor é instalação (one-off) ou impacto anual.
-            </div>
           </div>
 
-          <!-- TERMINALS -->
           <div id="secTerminals" class="mt-4" style="display:none">
             <div class="section-head">
               <div class="left"><span class="badge-num">3</span>Terminais</div>
@@ -687,7 +529,6 @@
             </div>
           </div>
 
-          <!-- ACCESSORIES -->
           <div id="secAccessories" class="mt-4" style="display:none">
             <div class="section-head">
               <div class="left"><span class="badge-num">4</span>Acessórios / Serviços</div>
@@ -713,10 +554,34 @@
             </div>
           </div>
 
-          <!-- TECH ADVISORY -->
+          <div id="secRenting" class="mt-4" style="display:none">
+            <div class="section-head">
+              <div class="left"><span class="badge-num">5</span>Renting</div>
+              <div class="mini-actions">
+                <button class="btn btn-sm btn-ghost" type="button" id="addRentingRow">
+                  <i class="bi bi-plus-lg"></i> Adicionar item
+                </button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table-lite">
+                <thead>
+                  <tr>
+                    <th style="width:40%">Serviço</th>
+                    <th style="width:18%">Colaboradores</th>
+                    <th style="width:18%">Valor unitário</th>
+                    <th style="width:16%">Tipo</th>
+                    <th style="width:8%"></th>
+                  </tr>
+                </thead>
+                <tbody id="rentingBody"></tbody>
+              </table>
+            </div>
+          </div>
+
           <div id="secTechAdvisory" class="mt-4" style="display:none">
             <div class="section-head">
-              <div class="left"><span class="badge-num">5</span>Assessoria Técnica</div>
+              <div class="left"><span class="badge-num">6</span>Assessoria Técnica</div>
               <div class="mini-actions">
                 <button class="btn btn-sm btn-ghost" type="button" id="addTechRow">
                   <i class="bi bi-plus-lg"></i> Adicionar pacote
@@ -737,15 +602,11 @@
                 <tbody id="techBody"></tbody>
               </table>
             </div>
-            <div class="pdf-note mt-2">
-              A implementação pode ser ajustada conforme o número de colaboradores e complexidade do projecto.
-            </div>
           </div>
 
-          <!-- SUPPORT -->
           <div id="secSupport" class="mt-4" style="display:none">
             <div class="section-head">
-              <div class="left"><span class="badge-num">6</span>Suporte Técnico</div>
+              <div class="left"><span class="badge-num">7</span>Suporte Técnico</div>
               <div class="mini-actions">
                 <button class="btn btn-sm btn-ghost" type="button" id="addSupportRow">
                   <i class="bi bi-plus-lg"></i> Adicionar pack
@@ -766,9 +627,6 @@
                 <tbody id="supportBody"></tbody>
               </table>
             </div>
-            <div class="pdf-note mt-2">
-              Os packs garantem suporte adequado e resposta rápida, assegurando continuidade operacional e satisfação do cliente.
-            </div>
           </div>
 
           <hr class="my-4">
@@ -779,6 +637,7 @@
               <textarea id="notes" class="form-control" rows="3" placeholder="Notas adicionais (opcional)"></textarea>
             </div>
           </div>
+
           <br>
 
           <div class="totals-card mb-3">
@@ -791,53 +650,14 @@
               <div class="v" id="annualTotal">0,00 €</div>
             </div>
             <div class="totals-row">
+              <div class="k"><i class="bi bi-calendar3"></i> Subscrição mensal</div>
+              <div class="v" id="monthlyTotal">0,00 €</div>
+            </div>
+            <div class="totals-row">
               <div class="k"><i class="bi bi-box-seam"></i> One-off (instalação/equip.)</div>
               <div class="v" id="oneoffTotal">0,00 €</div>
             </div>
           </div>
-        </div>
-
-        <!-- RIGHT: Summary -->
-        <div class="panel d-none ">
-          <h5>Resumo</h5>
- 
-
-          <div class="soft mb-3">
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="fw-bold" style="color:#0b2e7a">Templates rápidos</div>
-              <button class="btn btn-sm btn-ghost" id="resetAll" type="button"><i class="bi bi-arrow-counterclockwise"></i> Limpar</button>
-            </div>
-            <div class="d-grid gap-2 mt-3">
-              <button class="btn btn-outline-primary" type="button" id="loadTemplateHR">
-                <i class="bi bi-people"></i> Proposta 2smart HR (exemplo)
-              </button>
-              <button class="btn btn-outline-primary" type="button" id="loadTemplateSignage">
-                <i class="bi bi-display"></i> Proposta Sinalética (exemplo)
-              </button>
-            </div>
-            <div class="pdf-note mt-3">
-              Os valores são “base” e podem ser alterados nos campos do formulário.
-            </div>
-          </div>
-
-          <div class="soft">
-            <div class="fw-bold mb-2" style="color:#0b2e7a">Capa e Footer do PDF</div>
-            <div class="row g-2">
-              <div class="col-12">
-                <label class="form-label">URL da capa</label>
-                <input id="Url" class="form-control" value="https://ik.imagekit.io/fsobpyaa5i/capa_smart.png?updatedAt=1769508815425">
-              </div>
-              <div class="col-12">
-                <label class="form-label">URL do footer</label>
-                <input id="footerUrl" class="form-control" value="https://ik.imagekit.io/fsobpyaa5i/Group%2030469%20(3).png">
-              </div>
-              <div class="col-12">
-                <label class="form-label">Logótipo 2smart</label>
-                <input id="logoUrl" class="form-control" value="https://ik.imagekit.io/fsobpyaa5i/Ativo%208%20(2).png">
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
 
@@ -846,7 +666,7 @@
           <div class="loader" id="loader">
             <span class="spinner"></span>
             <span>A gerar PDF…</span>
-          </div> 
+          </div>
         </div>
 
         <div class="d-flex gap-2 flex-wrap">
@@ -858,14 +678,11 @@
           </button>
         </div>
       </div>
-
     </div>
   </div>
 
-  <!-- Hidden PDF render root -->
   <div id="pdfRenderHost"><div id="pdfRoot"></div></div>
 
-  <!-- Preview Modal -->
   <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-preview-narrow">
       <div class="modal-content" style="border-radius:18px;">
@@ -881,85 +698,57 @@
   </div>
 
   <script>
-
-    // ---------- Helpers ----------
     const eur = (n) => {
       const v = Number(n || 0);
       return v.toLocaleString("pt-PT", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " €";
     };
+
     const num = (v) => {
       if (v === null || v === undefined) return 0;
       const s = String(v).replace(",", ".").replace(/[^\d.\-]/g, "");
       const n = Number(s);
       return Number.isFinite(n) ? n : 0;
     };
-    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16); 
 
+    const uid = () => Math.random().toString(16).slice(2) + Date.now().toString(16);
+    const $ = (id) => document.getElementById(id);
     function show(el, on){ el.style.display = on ? "" : "none"; }
- 
 
-    // ---------- Catalogs (podes alterar preços depois) ----------
     const CATALOG = {
       software: [
         { label: "2smart HR Cloud — Licença (1º Ano)", price: 6.60, type: "mensal_colab", hint: "€ / colaborador (mês)" },
-        { label: "2smart HR Cloud — Subscrição Anual", price: 4.50, type: "anual_colab", hint: "€ / colaborador / ano" },
-       /*
-        { label: "2smart ISP — Preço de Ativação", price: 60.00, type: "oneoff_terminal", hint: "€ / terminal" },
-        { label: "2smart ISP — Subscrição Anual", price: 15.00, type: "anual_terminal", hint: "€ / terminal / ano" }, 
-        { label: "CMS Sinalética (Licença + Gestão) — 1º Ano", price: 240.00, type: "oneoff", hint: "€ (1º ano)" },     
-        */],
+        { label: "2smart HR Cloud — Subscrição Anual", price: 4.50, type: "anual_colab", hint: "€ / colaborador / ano" }
+      ],
       modules: [
-        { label: "Geolocalização & Geofencing", price: 1.00, model: "mensal_colab", hint: "€ / mês por colaborador", desc: "Veja a movimentação, presença e cobertura das equipas." },
-        { label: "Integração com ERP", price: 0.65, model: "mensal_colab", hint: "€ / mês por colaborador", desc: "Este módulo melhora a produtividade e reforça o controlo sobre os processos internos da sua empresa." },
-        { label: "Automatização de Processos e Envio de Relatórios", price: 8.00, model: "mensal", hint: "€ / mês", desc: "Permite agendar e enviar automaticamente qualquer relatório do 2Smart HR para destinatários pré-definidos." },
+        { label: "Geolocalização & Geofencing", price: 1.00, model: "mensal_colab", hint: "€ / mês por colaborador" },
+        { label: "Integração com ERP", price: 0.65, model: "mensal_colab", hint: "€ / mês por colaborador" },
+        { label: "Automatização de Processos e Envio de Relatórios", price: 8.00, model: "mensal", hint: "€ / mês" }
       ],
       terminals: [
         { label: "2S-M6PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 4.3″ Luz Visível Wifi", price: 318.00, cat: "Acessos + Assiduidade" },
         { label: "2S-M5PRO -  Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 261.00, cat: "Acessos + Assiduidade" },
         { label: "2S-M2PRO - Terminal 2Smart HR Rec. Facial + imp. Digital + RFID 125KHz LCD 2.8″ Luz Visível Wifi", price: 195.00, cat: "Acessos + Assiduidade" },
-
-
-        { label: "TA500 — Terminal Controlo Assiduidade (Impressão Digital)", price: 269.00, cat: "Assiduidade" },
-        { label: "R3 — Terminal Acessos e Assiduidades (Impressão Digital)", price: 428.00, cat: "Acessos + Assiduidade" },
-        { label: "HX-2200 — Terminal Acessos e Assiduidades TCP/IP (RFID WiFi)", price: 265.00, cat: "Acessos + Assiduidade" },
-        { label: "VL-SPEEDFACE-V3L-FP-1-W — Terminal Gestão Acessos (Impressão Digital)", price: 195.00, cat: "Acessos" },
-        { label: "V5L-TD — Terminal Helix (Facial + Palma + Temperatura)", price: 891.00, cat: "Biométrico Avançado" },
-        { label: "SPEEDFACE-C5L — Terminal ZKTeco (RFID + Facial 125KHz)", price: 340.00, cat: "Biométrico" },
-        { label: "TA500R — Terminal Controlo Assiduidade (Impressão Digital)", price: 335.00, cat: "Assiduidade" },
-        { label: "FACE ID 4 — Terminal Controlo de Assiduidade", price: 443.25, cat: "Assiduidade" },
-        { label: "EFACE10 — Terminal Gestão de Assiduidades (Facial)", price: 268.00, cat: "Assiduidade" },
-        { label: "VL-SPEEDFACE-V5L-P-I-W — Terminal Gestão Acessos (Facial)", price: 380.00, cat: "Acessos" },
-        { label: "C5L-TD — Terminal Reconhecimento Facial (RFID + Temperatura)", price: 790.00, cat: "Biométrico" },
-        { label: "S922 — Terminal Acessos e Assiduidades (WiFi | 3G | Impressão Digital)", price: 846.24, cat: "Acessos + Assiduidade" },
-
-        // Sinalética/Shop Window (exemplo do teu PDF)
-        { label: "Shop Window LCD 43\" (Série U)", price: 1290.00, cat: "Sinalética" },
-        { label: "Shop Window LCD 55\" (Série U)", price: 1590.00, cat: "Sinalética" }
+        { label: "TA500 — Terminal Controlo Assiduidade (Impressão Digital)", price: 269.00, cat: "Assiduidade" }
       ],
       accessories: [
         { label: "Instalação (serviço)", price: 220.00, type:"oneoff", hint:"€" },
         { label: "Configuração/Parametrização", price: 180.00, type:"oneoff", hint:"€" },
-        { label: "Deslocação (até 30 km)", price: 85.00, type:"oneoff", hint:"€" },
+        { label: "Deslocação (até 30 km)", price: 85.00, type:"oneoff", hint:"€" }
+      ],
+      renting: [
+        { label: "Renting (Instalação, Implementação, e formação remota)", price: 400.00, base: "empresa" },
+        { label: "Licença", price: 1.50, base: "colaborador" }
       ],
       tech: [
         { label: "Implementação e formação remota — até 50 colaboradores", hours: 4, price: 145.00 },
-        { label: "Implementação e formação  remota — até 120 colaboradores", hours: 5, price: 160.00 },
-        { label: "Implementação e formação remota — até 200 colaboradores", hours: 8, price: 280.00 },
-        { label: "Implementação e formação  remota — até 300 colaboradores", hours: 16, price: 560.00 },
-        { label: "Implementação e formação  remota — mais de 300 colaboradores", hours: 0, price: 0.00 },
-        { label: "Formação remota — 4 horas", hours: 4, price: 120.00 },
-        { label: "Formação remota — 8 horas", hours: 8, price: 240.00 },
-        { label: "Formação — 2smart App", hours: 0, price: 100.00 },
+        { label: "Implementação e formação  remota — até 120 colaboradores", hours: 5, price: 160.00 }
       ],
       support: [
         { label: "2SMART_SERVICE_5", includes: "5h / ano", price: 200.00 },
-        { label: "2SMART_SERVICE_10", includes: "10h / ano", price: 400.00 },
-        { label: "2SMART_SERVICE_20", includes: "20h / ano", price: 800.00 },
-        { label: "Onsite (até 30 km)", includes: "Deslocação", price: 85.00 },
+        { label: "2SMART_SERVICE_10", includes: "10h / ano", price: 400.00 }
       ]
     };
 
-    // ---------- State ----------
     const state = {
       software: [],
       modules: [],
@@ -967,19 +756,16 @@
       accessories: [],
       tech: [],
       support: [],
+      renting: [
+        { id: uid(), label: "Renting  (Instalação, Implementação, e formação remota)", unit: 400.00, collabs: 0, kind: "anual" }
+      ]
     };
 
-    // ---------- DOM ----------
-    const $ = (id) => document.getElementById(id);
     setTimeout(() => {
-      let p = document?.querySelector("#refCode") 
-      p.value = "PR2S-" +  (Math.random(4,8)*Math.random(8,2)*3).toString().split(".")[1]; 
-      console.log(p.value)
-    }, 2000);
+      const p = document?.querySelector("#refCode");
+      if(p) p.value = "PR2S-" + (Math.random(4,8)*Math.random(8,2)*3).toString().split(".")[1];
+    }, 1200);
 
-    
-
-    // --- PDF helpers (evita PDF em branco por CORS/tainted canvas) ---
     const PDF = window.__PDF_PRO__ || (window.__PDF_PRO__ = {});
     PDF.ensureHost = PDF.ensureHost || function(){
       let host = document.getElementById("pdfRenderHost");
@@ -990,7 +776,6 @@
       }
       return host;
     };
-
     PDF.waitImages = PDF.waitImages || function(root){
       const imgs = Array.from(root.querySelectorAll("img"));
       return Promise.all(imgs.map(img => new Promise(resolve => {
@@ -1000,7 +785,6 @@
         img.addEventListener("error", done, { once:true });
       })));
     };
-
     PDF.toDataURL = PDF.toDataURL || async function(url){
       const res = await fetch(url, { mode: "cors", cache: "no-cache" });
       const blob = await res.blob();
@@ -1010,7 +794,6 @@
         r.readAsDataURL(blob);
       });
     };
-
     PDF.inlineImages = PDF.inlineImages || async function(root){
       const imgs = Array.from(root.querySelectorAll("img"));
       for(const img of imgs){
@@ -1023,20 +806,22 @@
       }
     };
 
-// toggles
     const toggles = [
       ["toggleSoftware", "secSoftware"],
       ["toggleModules", "secModules"],
       ["toggleTerminals", "secTerminals"],
       ["toggleAccessories", "secAccessories"],
+      ["toggleRenting", "secRenting"],
       ["toggleTechAdvisory", "secTechAdvisory"],
-      ["toggleSupport", "secSupport"],
+      ["toggleSupport", "secSupport"]
     ];
     toggles.forEach(([t, s]) => {
-      $(t).addEventListener("change", () => show($(s), $(t).checked));
+      $(t).addEventListener("change", () => {
+        show($(s), $(t).checked);
+        recalcTotals();
+      });
     });
 
-    // ---------- Row builders ----------
     function buildSelect(options, selectedLabel){
       const sel = document.createElement("select");
       sel.className = "form-select form-select-sm";
@@ -1074,40 +859,25 @@
       return inp;
     }
 
-    function buildPill(text){
-      const span = document.createElement("span");
-      span.className = "badge text-bg-light border";
-      span.style.fontWeight = "800";
-      span.style.color = "#0b2e7a";
-      span.textContent = text;
-      return span;
-    }
-
     function addRow(section, row){
       state[section].push(row);
       render();
     }
+
     function removeRow(section, id){
       state[section] = state[section].filter(r => r.id !== id);
       render();
     }
 
-    // ---------- Render ----------
     function render(){
       renderSoftware();
       renderModules();
       renderTerminals();
       renderAccessories();
+      renderRenting();
       renderTech();
       renderSupport();
       recalcTotals();
-      autoShowSections();
-    }
-
-    function autoShowSections(){
-      // If user added items but toggle off, keep hidden; user controls.
-      // However if toggle on and section empty, still show (so they can add items).
-      // We'll do nothing special here besides respecting toggles.
     }
 
     function renderSoftware(){
@@ -1116,7 +886,6 @@
       state.software.forEach(r => {
         const tr = document.createElement("tr");
 
-        // item select
         const tdItem = document.createElement("td");
         const sel = buildSelect(CATALOG.software, r.label);
         tdItem.appendChild(sel);
@@ -1126,24 +895,21 @@
         hint.textContent = (CATALOG.software.find(x => x.label === r.label)?.hint) || "";
         tdItem.appendChild(hint);
 
-        // qty
         const tdQty = document.createElement("td");
         const qty = buildQty(r.qty);
         tdQty.appendChild(qty);
 
-        // unit
         const tdUnit = document.createElement("td");
         const unit = buildMoney(r.unit);
         tdUnit.appendChild(unit);
 
-        // type
         const tdType = document.createElement("td");
         const typeSel = document.createElement("select");
         typeSel.className = "form-select form-select-sm";
         [
-          {v:"oneoff", t:"One-off"},
           {v:"anual", t:"Anual"},
           {v:"mensal", t:"Mensal"},
+          {v:"oneoff", t:"One-off"}
         ].forEach(o=>{
           const opt=document.createElement("option");
           opt.value=o.v; opt.textContent=o.t;
@@ -1152,7 +918,6 @@
         });
         tdType.appendChild(typeSel);
 
-        // delete
         const tdDel = document.createElement("td");
         tdDel.className = "text-end";
         const del = document.createElement("button");
@@ -1161,17 +926,16 @@
         del.innerHTML = '<i class="bi bi-trash"></i>';
         tdDel.appendChild(del);
 
-        // events
         sel.addEventListener("change", () => {
           r.label = sel.value;
           const found = CATALOG.software.find(x => x.label === r.label);
-          r.unit = found ? found.price : r.unit;
-          // infer default kind
-          if (found?.type?.startsWith("anual")) r.kind = "anual";
-          else if (found?.type?.startsWith("mensal")) r.kind = "mensal";
-          else r.kind = "oneoff";
+          if(found){
+            r.unit = found.price;
+            r.kind = found.type?.startsWith("anual") ? "anual" : (found.type?.startsWith("mensal") ? "mensal" : "oneoff");
+          }
           render();
         });
+
         qty.addEventListener("input", ()=>{ r.qty = num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit = num(unit.value); recalcTotals(); });
         typeSel.addEventListener("change", ()=>{ r.kind = typeSel.value; recalcTotals(); });
@@ -1229,10 +993,10 @@
         sel.addEventListener("change", () => {
           r.label = sel.value;
           const found = CATALOG.modules.find(x => x.label === r.label);
-          r.unit = found ? found.price : r.unit;
-          r.model = found?.model === "anual_colab" ? "anual" : (found?.model || r.model);
+          if(found) r.unit = found.price;
           render();
         });
+
         qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
         modelSel.addEventListener("change", ()=>{ r.model=modelSel.value; recalcTotals(); });
@@ -1262,7 +1026,9 @@
         tdUnit.appendChild(unit);
 
         const tdCat = document.createElement("td");
-        tdCat.appendChild(buildPill(r.cat || "—"));
+        tdCat.textContent = r.cat || "—";
+        tdCat.style.fontWeight = "800";
+        tdCat.style.color = "#0b2e7a";
 
         const tdDel = document.createElement("td");
         tdDel.className="text-end";
@@ -1275,10 +1041,13 @@
         sel.addEventListener("change", () => {
           r.label = sel.value;
           const found = CATALOG.terminals.find(x => x.label === r.label);
-          r.unit = found ? found.price : r.unit;
-          r.cat = found ? found.cat : r.cat;
+          if(found){
+            r.unit = found.price;
+            r.cat = found.cat;
+          }
           render();
         });
+
         qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
         del.addEventListener("click", ()=> removeRow("terminals", r.id));
@@ -1315,7 +1084,7 @@
         typeSel.className="form-select form-select-sm";
         [
           {v:"oneoff", t:"One-off"},
-          {v:"anual", t:"Anual"},
+          {v:"anual", t:"Anual"}
         ].forEach(o=>{
           const opt=document.createElement("option");
           opt.value=o.v; opt.textContent=o.t;
@@ -1335,10 +1104,10 @@
         sel.addEventListener("change", ()=>{
           r.label = sel.value;
           const found = CATALOG.accessories.find(x=>x.label===r.label);
-          r.unit = found ? found.price : r.unit;
-          r.kind = found?.type === "anual" ? "anual" : (found?.type || r.kind);
+          if(found) r.unit = found.price;
           render();
         });
+
         qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
         typeSel.addEventListener("change", ()=>{ r.kind=typeSel.value; recalcTotals(); });
@@ -1346,6 +1115,133 @@
 
         tr.append(tdItem, tdQty, tdUnit, tdType, tdDel);
         tbody.appendChild(tr);
+      });
+    }
+
+    function rentingLineTotal(r){
+      const found = CATALOG.renting.find(x => x.label === r.label);
+      const base = found?.base || "empresa";
+      if(base === "empresa") return 1 * num(r.unit);
+      return Math.max(0, Math.floor(num(r.collabs))) * num(r.unit);
+    }
+
+    function renderRenting(){
+      const tbody = $("rentingBody");
+      tbody.innerHTML = "";
+
+      state.renting.forEach(r => {
+        const tr = document.createElement("tr");
+
+        const tdItem = document.createElement("td");
+        const sel = buildSelect(CATALOG.renting, r.label);
+        tdItem.appendChild(sel);
+
+        const tdCollabs = document.createElement("td");
+        const collabs = buildQty(r.collabs ?? 0);
+        collabs.placeholder = "0";
+        tdCollabs.appendChild(collabs);
+
+        const tdUnit = document.createElement("td");
+        const unit = buildMoney(r.unit);
+        tdUnit.appendChild(unit);
+
+        const tdKind = document.createElement("td");
+        const kindSel = document.createElement("select");
+        kindSel.className = "form-select form-select-sm";
+        [
+          {v:"mensal", t:"Mensal"},
+          {v:"anual", t:"Anual"},
+          {v:"oneoff", t:"One-off"}
+        ].forEach(o=>{
+          const opt=document.createElement("option");
+          opt.value=o.v; opt.textContent=o.t;
+          if (r.kind===o.v) opt.selected=true;
+          kindSel.appendChild(opt);
+        });
+        tdKind.appendChild(kindSel);
+
+        const tdDel = document.createElement("td");
+        tdDel.className = "text-end";
+        const del = document.createElement("button");
+        del.className = "btn btn-sm btn-outline-danger";
+        del.type = "button";
+        del.innerHTML = '<i class="bi bi-trash"></i>';
+        tdDel.appendChild(del);
+
+        const applyRules = () => {
+          const found = CATALOG.renting.find(x => x.label === r.label);
+          const base = found?.base || "empresa";
+
+          if(found){
+            r.unit = found.price;
+            unit.value = r.unit;
+          }
+
+          if(base === "empresa"){
+            r.collabs = 0;
+            collabs.value = 0;
+            tdCollabs.innerHTML = '<span style="font-weight:900;color:#0b2e7a">—</span>';
+          } else {
+            tdCollabs.innerHTML = "";
+            tdCollabs.appendChild(collabs);
+          }
+
+          if(r.label === "Licença"){
+            kindSel.innerHTML = "";
+            [
+              {v:"mensal", t:"Mensal"},
+              {v:"anual", t:"Anual"}
+            ].forEach(o=>{
+              const opt=document.createElement("option");
+              opt.value=o.v; opt.textContent=o.t;
+              kindSel.appendChild(opt);
+            });
+            if(r.kind !== "mensal" && r.kind !== "anual") r.kind = "mensal";
+            kindSel.value = r.kind;
+          } else {
+            kindSel.innerHTML = "";
+            [
+              {v:"mensal", t:"Mensal"},
+              {v:"anual", t:"Anual"},
+              {v:"oneoff", t:"One-off"}
+            ].forEach(o=>{
+              const opt=document.createElement("option");
+              opt.value=o.v; opt.textContent=o.t;
+              kindSel.appendChild(opt);
+            });
+            if(!["mensal","anual","oneoff"].includes(r.kind)) r.kind = "anual";
+            kindSel.value = r.kind;
+          }
+        };
+
+        sel.addEventListener("change", () => {
+          r.label = sel.value;
+          applyRules();
+          recalcTotals();
+        });
+
+        collabs.addEventListener("input", ()=>{ r.collabs = Math.max(0, Math.floor(num(collabs.value))); recalcTotals(); });
+        unit.addEventListener("input", ()=>{ r.unit = num(unit.value); recalcTotals(); });
+        kindSel.addEventListener("change", ()=>{ r.kind = kindSel.value; recalcTotals(); });
+
+        del.addEventListener("click", ()=>{
+          if(state.renting.length === 1){
+            r.label = "Renting";
+            r.unit = 400.00;
+            r.collabs = 0;
+            r.kind = "anual";
+            renderRenting();
+            recalcTotals();
+            return;
+          }
+          state.renting = state.renting.filter(x => x.id !== r.id);
+          render();
+        });
+
+        tr.append(tdItem, tdCollabs, tdUnit, tdKind, tdDel);
+        tbody.appendChild(tr);
+
+        applyRules();
       });
     }
 
@@ -1383,10 +1279,13 @@
         sel.addEventListener("change", ()=>{
           r.label=sel.value;
           const found=CATALOG.tech.find(x=>x.label===r.label);
-          r.hours = found ? found.hours : r.hours;
-          r.unit = found ? found.price : r.unit;
+          if(found){
+            r.hours = found.hours;
+            r.unit = found.price;
+          }
           render();
         });
+
         hours.addEventListener("input", ()=>{ r.hours=num(hours.value); });
         qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
@@ -1408,7 +1307,9 @@
         tdPack.appendChild(sel);
 
         const tdInc=document.createElement("td");
-        tdInc.appendChild(buildPill(r.includes || "—"));
+        tdInc.textContent = r.includes || "—";
+        tdInc.style.fontWeight = "800";
+        tdInc.style.color = "#0b2e7a";
 
         const tdQty=document.createElement("td");
         const qty=buildQty(r.qty);
@@ -1429,10 +1330,13 @@
         sel.addEventListener("change", ()=>{
           r.label=sel.value;
           const found=CATALOG.support.find(x=>x.label===r.label);
-          r.includes = found ? found.includes : r.includes;
-          r.unit = found ? found.price : r.unit;
+          if(found){
+            r.includes = found.includes;
+            r.unit = found.price;
+          }
           render();
         });
+
         qty.addEventListener("input", ()=>{ r.qty=num(qty.value); recalcTotals(); });
         unit.addEventListener("input", ()=>{ r.unit=num(unit.value); recalcTotals(); });
         del.addEventListener("click", ()=> removeRow("support", r.id));
@@ -1442,64 +1346,52 @@
       });
     }
 
-    // ---------- Totals ----------
     function recalcTotals(){
-      // Annual = items marked annual + module model annual
       let annual = 0;
       let monthly = 0;
       let oneoff = 0;
 
-      const softwareTotals = state.software.map(r=>{
+      state.software.forEach(r=>{
         const line = num(r.qty) * num(r.unit);
         if (r.kind === "anual") annual += line;
-        else if (r.kind === "mensal") {
-          monthly += line;
-        } else oneoff += line;
-        return line;
+        else if (r.kind === "mensal") monthly += line;
+        else oneoff += line;
       });
 
-      const moduleTotals = state.modules.map(r=>{
+      state.modules.forEach(r=>{
         const line = num(r.qty) * num(r.unit);
         if (r.model === "anual") annual += line;
-        else if (r.model === "mensal" || r.model === "mensal_colab") monthly += line;
         else oneoff += line;
-        return line;
       });
 
-      const terminalTotals = state.terminals.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        oneoff += line;
-        return line;
-      });
+      state.terminals.forEach(r=>{ oneoff += num(r.qty) * num(r.unit); });
 
-      const accessoryTotals = state.accessories.map(r=>{
+      state.accessories.forEach(r=>{
         const line = num(r.qty) * num(r.unit);
         if (r.kind === "anual") annual += line;
         else oneoff += line;
-        return line;
       });
 
-      const techTotals = state.tech.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        oneoff += line;
-        return line;
-      });
+      state.tech.forEach(r=>{ oneoff += num(r.qty) * num(r.unit); });
+      state.support.forEach(r=>{ oneoff += num(r.qty) * num(r.unit); });
 
-      const supportTotals = state.support.map(r=>{
-        const line = num(r.qty) * num(r.unit);
-        oneoff += line;
-        return line;
-      });
+      if ($("toggleRenting").checked){
+        state.renting.forEach(r=>{
+          const line = rentingLineTotal(r);
+          if(r.kind === "mensal") monthly += line;
+          else if(r.kind === "anual") annual += line;
+          else oneoff += line;
+        });
+      }
 
       const grand = annual + oneoff;
 
       $("annualTotal").textContent = eur(annual);
+      $("monthlyTotal").textContent = eur(monthly);
       $("oneoffTotal").textContent = eur(oneoff);
-      if (document.getElementById("monthlyTotal")) $("monthlyTotal").textContent = eur(monthly);
       $("grandTotal").textContent = eur(grand);
     }
 
-    // ---------- Defaults / Templates ----------
     function addDefaultRow(section, catalog, label){
       const found = catalog.find(x=>x.label===label) || catalog[0];
       if (!found) return;
@@ -1507,11 +1399,11 @@
       if (section === "software"){
         addRow("software", { id: uid(), label: found.label, qty: 1, unit: found.price, kind: (found.type?.startsWith("anual") ? "anual" : (found.type?.startsWith("mensal") ? "mensal" : "oneoff")) });
       } else if (section === "modules"){
-        addRow("modules", { id: uid(), label: found.label, qty: 1, unit: found.price, model: (found.model === "anual_colab" ? "anual" : "oneoff") });
+        addRow("modules", { id: uid(), label: found.label, qty: 1, unit: found.price, model: "oneoff" });
       } else if (section === "terminals"){
         addRow("terminals", { id: uid(), label: found.label, qty: 1, unit: found.price, cat: found.cat });
       } else if (section === "accessories"){
-        addRow("accessories", { id: uid(), label: found.label, qty: 1, unit: found.price, kind: (found.type==="anual" ? "anual" : "oneoff") });
+        addRow("accessories", { id: uid(), label: found.label, qty: 1, unit: found.price, kind: "oneoff" });
       } else if (section === "tech"){
         addRow("tech", { id: uid(), label: found.label, hours: found.hours, qty: 1, unit: found.price });
       } else if (section === "support"){
@@ -1519,18 +1411,10 @@
       }
     }
 
-    function resetAll(){
-      state.software = [];
-      state.modules = [];
-      state.terminals = [];
-      state.accessories = [];
-      state.tech = [];
-      state.support = [];
-      $("notes").value = "";
-      render();
+    function addRentingRow(){
+      const found = CATALOG.renting[0];
+      addRow("renting", { id: uid(), label: found.label, unit: found.price, collabs: 0, kind: "anual" });
     }
-
-    $("resetAll").addEventListener("click", resetAll);
 
     $("addSoftwareRow").addEventListener("click", ()=> addDefaultRow("software", CATALOG.software));
     $("addModuleRow").addEventListener("click", ()=> addDefaultRow("modules", CATALOG.modules));
@@ -1538,71 +1422,13 @@
     $("addAccessoryRow").addEventListener("click", ()=> addDefaultRow("accessories", CATALOG.accessories));
     $("addTechRow").addEventListener("click", ()=> addDefaultRow("tech", CATALOG.tech));
     $("addSupportRow").addEventListener("click", ()=> addDefaultRow("support", CATALOG.support));
+    $("addRentingRow").addEventListener("click", addRentingRow);
 
-    $("loadTemplateHR").addEventListener("click", ()=>{
-      resetAll();
-      $("toggleSoftware").checked = true; show($("secSoftware"), true);
-      $("toggleModules").checked = true; show($("secModules"), true);
-      $("toggleTerminals").checked = true; show($("secTerminals"), true);
-      $("toggleTechAdvisory").checked = true; show($("secTechAdvisory"), true);
-      $("toggleSupport").checked = true; show($("secSupport"), true);
-
-      $("projectName").value = "Implementação 2smart HR";
-      $("clientName").value = "";
-      $("validity").value = "30 dias";
-
-      addDefaultRow("software", CATALOG.software, "2smart HR Cloud — Licença (1º Ano)");
-      // Exemplo: 50 colaboradores
-      state.software[0].qty = 50;
-
-      addDefaultRow("software", CATALOG.software, "2smart HR Cloud — Subscrição Anual");
-      state.software[1].qty = 50;
-
-      addDefaultRow("modules", CATALOG.modules, "Integração com ERP");
-      
-      state.modules[0].qty = 50;
-
-      addDefaultRow("terminals", CATALOG.terminals, "TA500 — Terminal Controlo Assiduidade (Impressão Digital)");
-      state.terminals[0].qty = 1;
-
-      addDefaultRow("tech", CATALOG.tech, "Implementação remota — até 50 colaboradores");
-      addDefaultRow("support", CATALOG.support, "2SMART_SERVICE_5");
-
-      $("notes").value = "Proposta sujeita a validação técnica final. Valores indicados sem IVA.";
-      render();
-    });
-
-    $("loadTemplateSignage").addEventListener("click", ()=>{
-      resetAll();
-      $("toggleTerminals").checked = true; show($("secTerminals"), true);
-      $("toggleAccessories").checked = true; show($("secAccessories"), true);
-      $("toggleSoftware").checked = true; show($("secSoftware"), true);
-
-      $("projectName").value = "Projeto Sinalética Digital";
-      $("refCode").value = "";
-
-      addDefaultRow("terminals", CATALOG.terminals, "Shop Window LCD 43\" (Série U)");
-      state.terminals[0].qty = 2;
-
-      addDefaultRow("accessories", CATALOG.accessories, "Instalação (serviço)");
-      state.accessories[0].qty = 1;
-
-      addDefaultRow("software", CATALOG.software, "CMS Sinalética (Licença + Gestão) — 1º Ano");
-      state.software[0].qty = 2;
-      state.software[0].kind = "oneoff";
-
-      $("notes").value = "Conteúdos e calendário de publicações a definir com o cliente.";
-      render();
-    });
-
-    // ---------- PDF builder ----------
     function sectionToPDF(title, rows, options={}){
       const { columns } = options;
       if (!rows || rows.length === 0) return "";
-
       const thead = columns.map(c => `<th>${c}</th>`).join("");
-      const tbody = rows.map(r => `<tr>${r.map((cell, idx)=> `<td>${cell}</td>`).join("")}</tr>`).join("");
-
+      const tbody = rows.map(r => `<tr>${r.map(cell=> `<td>${cell}</td>`).join("")}</tr>`).join("");
       return `
         <div class="pdf-section-title">${title}</div>
         <table class="pdf-table">
@@ -1613,9 +1439,9 @@
     }
 
     function buildPDFHtml(){
-      const Url = $("Url").value.trim();
-      const footerUrl = $("footerUrl").value.trim();
-      const logoUrl = $("logoUrl").value.trim();
+      const Url = "https://ik.imagekit.io/fsobpyaa5i/capa_smart.png?updatedAt=1769508815425";
+      const footerUrl = "https://ik.imagekit.io/fsobpyaa5i/Group%2030469%20(3).png";
+      const logoUrl = "https://ik.imagekit.io/fsobpyaa5i/Ativo%208%20(2).png";
 
       const projectName = $("projectName").value.trim() || "Proposta Comercial";
       const refCode = $("refCode").value.trim() || "";
@@ -1627,15 +1453,12 @@
       const notes = $("notes").value.trim() || "";
       const genDate = new Date().toLocaleDateString("pt-PT");
 
-      // Totals
-      // (recalc first)
       recalcTotals();
       const annual = $("annualTotal").textContent;
+      const monthly = $("monthlyTotal").textContent;
       const oneoff = $("oneoffTotal").textContent;
-      const monthly = (document.getElementById("monthlyTotal") ? $("monthlyTotal").textContent : "€0,00");
       const grand = $("grandTotal").textContent;
 
-      // Rows per section
       const softwareRows = state.software.map(r=>{
         const line = num(r.qty) * num(r.unit);
         const kind = r.kind === "anual" ? "Anual" : (r.kind === "mensal" ? "Mensal" : "One-off");
@@ -1650,7 +1473,7 @@
 
       const moduleRows = state.modules.map(r=>{
         const line = num(r.qty) * num(r.unit);
-        const model = r.model === "anual" ? "Anual" : (r.model === "mensal" ? "Mensal" : (r.model === "mensal_colab" ? "Mensal (por colaborador)" : "One-off"));
+        const model = r.model === "anual" ? "Anual" : "One-off";
         return [
           `<b>${escapeHtml(r.label)}</b>`,
           `${escapeHtml(String(r.qty || 0))}`,
@@ -1682,6 +1505,23 @@
         ];
       });
 
+      const rentingRows = (() => {
+        if (!$("toggleRenting").checked) return [];
+        const rows = state.renting
+          .map(r => {
+            const total = rentingLineTotal(r);
+            if(total <= 0) return null;
+            const tipo = r.kind === "mensal" ? "Mensal" : (r.kind === "anual" ? "Anual" : "One-off");
+            return [
+              `<b>${escapeHtml(r.label)}</b>`,
+              `${tipo}`,
+              `<b>${eur(total)}</b>`
+            ];
+          })
+          .filter(Boolean);
+        return rows;
+      })();
+
       const techRows = state.tech.map(r=>{
         const line = num(r.qty) * num(r.unit);
         const hours = (num(r.hours) > 0) ? `${num(r.hours)}h` : "Sob consulta";
@@ -1709,13 +1549,12 @@
       const showModules = $("toggleModules").checked && moduleRows.length;
       const showTerminals = $("toggleTerminals").checked && terminalRows.length;
       const showAccessories = $("toggleAccessories").checked && accessoryRows.length;
+      const showRenting = $("toggleRenting").checked && rentingRows.length;
       const showTech = $("toggleTechAdvisory").checked && techRows.length;
       const showSupport = $("toggleSupport").checked && supportRows.length;
 
-      // Build pages:
-      // Page 1: 
-      // Page 2+: proposal content; keep footer image at bottom.
-      const content = `        <div class="pdf-">
+      return `
+        <div class="pdf-">
           <img src="${escapeAttr(Url)}" alt="Capa">
         </div>
 
@@ -1744,21 +1583,13 @@
             ${showModules ? sectionToPDF("Módulos", moduleRows, { columns: ["Módulo","Qtd.","Valor unitário","Modelo","Total"] }) : ""}
             ${showTerminals ? sectionToPDF("Terminais", terminalRows, { columns: ["Item","Qtd.","Valor unitário","Total"] }) : ""}
             ${showAccessories ? sectionToPDF("Acessórios / Serviços", accessoryRows, { columns: ["Item","Qtd.","Valor unitário","Tipo","Total"] }) : ""}
+            ${showRenting ? sectionToPDF("Renting  (Instalação, Implementação, e formação remota)", rentingRows, { columns: ["Serviço","Tipo","Total"] }) : ""}
             ${showTech ? sectionToPDF("Assessoria Técnica", techRows, { columns: ["Pacote","Horas","Qtd.","Valor unitário","Total"] }) : ""}
             ${showSupport ? sectionToPDF("Suporte Técnico", supportRows, { columns: ["Pack","Inclui","Qtd.","Valor unitário","Total"] }) : ""}
 
             ${notes ? `
               <div class="pdf-section-title">Observações</div>
-              <div style="
-                border:1px solid #e8eef7;
-                border-radius:12px;
-                padding:12px;
-                font-size:11px;
-                line-height:1.6;
-                color:#30425e;
-                font-weight:500;
-                background:#fbfdff;
-              ">
+              <div style="border:1px solid #e8eef7;border-radius:12px;padding:12px;font-size:11px;line-height:1.6;color:#30425e;font-weight:500;background:#fbfdff;">
                 ${escapeHtml(notes).replace(/\n/g, "<br>")}
               </div>
             ` : ""}
@@ -1767,7 +1598,7 @@
           <div class="pdf-totals">
             <div class="pdf-chip">Total proposta: <span>${escapeHtml(grand)}</span></div>
             <div class="pdf-chip">Subscrição anual: <span>${escapeHtml(annual)}</span></div>
-            <div class="pdf-chip">Mensal: <span>${escapeHtml(monthly)}</span></div>
+            <div class="pdf-chip">Subscrição mensal: <span>${escapeHtml(monthly)}</span></div>
             <div class="pdf-chip">One-off: <span>${escapeHtml(oneoff)}</span></div>
           </div>
 
@@ -1776,9 +1607,8 @@
 
         <div class="pdf-footer">
           <img src="${escapeAttr(footerUrl)}" alt="Rodapé">
-        </div>`;
-
-      return content;
+        </div>
+      `;
     }
 
     function escapeHtml(str){
@@ -1791,14 +1621,13 @@
     }
     function escapeAttr(str){ return escapeHtml(str).replaceAll("\n",""); }
 
-    // ---------- Preview & Export ----------
     async function ensureImagesLoaded(root){
       const imgs = Array.from(root.querySelectorAll("img"));
       await Promise.all(imgs.map(img => {
         if (img.complete && img.naturalWidth) return Promise.resolve();
         return new Promise((res) => {
           img.onload = () => res();
-          img.onerror = () => res(); // don't block if an image fails
+          img.onerror = () => res();
         });
       }));
     }
@@ -1817,9 +1646,6 @@
       modal.show();
     });
 
-    
-    
-    
     async function exportPdfWithMode(qMode){
       const loader = $("loader");
       loader.classList.add("show");
@@ -1853,7 +1679,6 @@
         const JPEG_Q = (qMode === "light") ? 0.72 : (qMode === "balanced" ? 0.86 : 0.995);
         const FOOT_Q = (qMode === "light") ? 0.72 : (qMode === "balanced" ? 0.86 : 0.98);
 
-        // Remover footer temporariamente para o PDF do conteúdo (evita misturas/páginas vazias)
         const footerEl = root.querySelector(".pdf-footer");
         let footerNext = null;
         let footerParent = null;
@@ -1863,12 +1688,10 @@
           footerEl.remove();
         }
 
-        // Agora o root tem: capa + conteúdo (sem footer)
-        // Garantir que o host não corta o conteúdo (evita páginas em branco)
-        host.style.height = 'auto';
-        host.style.overflow = 'visible';
-        root.style.height = 'auto';
-        root.style.overflow = 'visible';
+        host.style.height = "auto";
+        host.style.overflow = "visible";
+        root.style.height = "auto";
+        root.style.overflow = "visible";
 
         const dynamicWinH = Math.max(1123, Math.ceil(root.scrollHeight || 0));
 
@@ -1889,22 +1712,18 @@
             y: 0
           },
           jsPDF: { unit: "px", format: [794,1123], orientation: "portrait" },
-          // Evita empurrões grandes (mas mantém respeito por page-break CSS)
           pagebreak: { mode: ["css"] }
         };
 
         const worker = html2pdf().set(opt).from(root).toPdf();
         const pdf = await worker.get("pdf");
 
-        // Repor footer no DOM
         if(footerEl && footerParent){
           if(footerNext) footerParent.insertBefore(footerEl, footerNext);
           else footerParent.appendChild(footerEl);
         }
 
-        // Anexar footer como última página
         if(footerEl){
-          // garantir imagens do footer prontas
           await PDF.inlineImages(footerEl);
           await PDF.waitImages(footerEl);
 
@@ -1916,14 +1735,13 @@
 
         pdf.save(filename);
 
-        // restore root
         if(originalParent){
           if(originalNext) originalParent.insertBefore(root, originalNext);
           else originalParent.appendChild(root);
         }
       } catch(err){
         console.error(err);
-        alert("Não foi possível gerar o PDF. Confirma as URLs da capa/footer/logo e tenta novamente.");
+        alert("Não foi possível gerar o PDF !");
       } finally{
         loader.classList.remove("show");
       }
@@ -1943,7 +1761,6 @@
         });
       }
 
-      // Os botões podem não existir se o modal não estiver no DOM (ou se foi removido).
       if(btnO){
         btnO.addEventListener("click", ()=>{
           bootstrap.Modal.getInstance(modalEl)?.hide();
@@ -1964,15 +1781,7 @@
       }
     }
 
-    // Garante que o DOM (incluindo o modal) já existe
-    if(document.readyState === "loading"){
-      document.addEventListener("DOMContentLoaded", bindPdfDownloadModal);
-    } else {
-      bindPdfDownloadModal();
-    }
-// exportPdfWithMode("light");
- 
-function sanitizeFile(s){
+    function sanitizeFile(s){
       return String(s || "Proposta")
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         .replace(/[^\w\-]+/g, "_")
@@ -1980,25 +1789,21 @@ function sanitizeFile(s){
         .replace(/^_+|_+$/g, "");
     }
 
-    // ---------- Init defaults (ligeiros) ----------
-    // Começa com uma linha software (podes remover)
-    addDefaultRow("software", CATALOG.software, "2smart HR Cloud — Licença (1º Ano)");
-    state.software[0].qty = 50;
+    if(document.readyState === "loading"){
+      document.addEventListener("DOMContentLoaded", bindPdfDownloadModal);
+    } else {
+      bindPdfDownloadModal();
+    }
 
-    // Ref vazio por defeito
+    addRow("software", { id: uid(), label: "2smart HR Cloud — Licença (1º Ano)", qty: 50, unit: 6.60, kind: "mensal" });
     $("refCode").value = "";
 
-    // Update logo in header when user edits URL
-    $("logoUrl").addEventListener("input", ()=>{
-      $("brandLogo").src = $("logoUrl").value.trim();
-    });
-
     render();
+    recalcTotals();
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Modal: Download PDF -->
   <div class="modal fade" id="downloadPdfModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" style="max-width:520px">
       <div class="modal-content" style="border-radius:18px; overflow:hidden">
@@ -2007,15 +1812,12 @@ function sanitizeFile(s){
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
         </div>
         <div class="modal-body" style="padding:10px 18px 18px">
-          <p style="margin:0 0 12px; color:#5a6c87; font-weight:600">Escolhe o tamanho do ficheiro (qualidade vs. peso):</p>
+          <p style="margin:0 0 12px; color:#5a6c87; font-weight:600">Escolhe o tamanho do ficheiro  :</p>
           <div class="d-grid gap-2">
             <button type="button" class="btn btn-primary" id="dlPdfOriginal">Original (alta qualidade)</button>
             <button type="button" class="btn btn-outline-primary" id="dlPdfBalanced">Equilibrado (recomendado)</button>
             <button type="button" class="btn btn-outline-secondary" id="dlPdfLight">Leve (mais compressão)</button>
-          </div>
-          <div style="margin-top:10px; font-size:12px; color:#7a8aa3; font-weight:600">
-            Dica: “Leve” reduz o tamanho do PDF com pequena perda de nitidez.
-          </div>
+          </div> 
         </div>
       </div>
     </div>
@@ -2023,3 +1825,5 @@ function sanitizeFile(s){
 
 </body>
 </html>
+
+
