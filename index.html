@@ -1297,9 +1297,7 @@
 
   function rentingLineTotal(r) {
     const found = CATALOG.renting.find(x => x.label === r.label);
-    const base = found?.base || "empresa";
-
-    // ✅ Garantir sempre 400 para o renting de instalação/implementação/formação
+    const base = found?.base || "empresa"; 
     if (isRentingSetup(r.label)) return 400.00;
 
     if (base === "empresa") return 1 * num(r.unit);
